@@ -133,6 +133,7 @@ function mousepressed()
 				        	menuPage = buttonArray[i][12]
 				            canClick = false
 				        end
+				        click:stop()
 				        click:play()
 				    end
 				end

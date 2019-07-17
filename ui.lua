@@ -20,6 +20,7 @@ end
 function ui.initForGame()
 
 	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",0)
+	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",1)
 
 	ui.addButton(170,290,220,60,255,255,255,"Play",0,0,0,"run")
 	ui.addButton(170,400,220,60,255,255,255,"Options",0,0,0,1)

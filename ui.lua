@@ -13,10 +13,13 @@ function ui.load()
 
 	backgrounds = {} --template {page,backgroundType,background}
 	buttonArray = {{}}
+	printArray = {{}}
 
 end
 
 function ui.initForGame()
+
+	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",0)
 
 	ui.addButton(170,290,220,60,255,255,255,"Play",0,0,0,"run")
 	ui.addButton(170,400,220,60,255,255,255,"Options",0,0,0,1)
@@ -63,6 +66,12 @@ function ui.addButton(x,y,xsize,ysize,r,g,b,text,textx,texty,page,action)
 	else
 		buttonArray[#buttonArray+1]={x,y,xsize,ysize,r,g,b,text,textx,texty,page,action}
 	end
+
+end
+
+function ui.addPrint(x,y,xsize,ysize,r,g,b,text,page,action)
+
+	printArray[#printArray+1]={x,y,xsize,ysize,r,g,b,text,page,action}
 
 end
 
@@ -125,6 +134,18 @@ function drawInputText()
 				love.graphics.print(buttonArray[i][13],buttonArray[i][1]+font:getWidth(buttonArray[i][8])*3+10,buttonArray[i][2]+10, 0, 3.6, 3.63)
 			end
 		end
+	end
+
+end
+
+function drawPrintText()
+
+	love.graphics.setFont(fontStarCruiser)
+	for i=1,#printArray do
+		if printArray[i][9] == menuPage then
+			love.graphics.setColor(rgb(printArray[i][5], printArray[i][6], printArray[i][7]))
+			love.graphics.print(printArray[i][8],printArray[i][1],printArray[i][2],0,printArray[i][3],printArray[i][4])
+		end 
 	end
 
 end
@@ -258,6 +279,7 @@ function ui.draw()
 	drawMenuBackgrounds()
 	drawButton()
 	drawInputText()
+	drawPrintText()
 
 end
 

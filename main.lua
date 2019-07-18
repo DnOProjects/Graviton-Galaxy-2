@@ -6,11 +6,6 @@ local audio = require "audio"
 function love.load()
 
 	math.randomseed(os.time())
-	
-	menuPage = 0
-	runPage = "inGame"
-	inGame = false
-	inGameMenuOpen = false
 
 	fonts.load()
 	audio.load()

@@ -19,6 +19,11 @@ end
 
 function ui.initForGame()
 
+	menuPage = 0
+	runPage = "inGame"
+	inGame = false
+	inGameMenuOpen = false
+
 	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",0)
 	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",1)
 

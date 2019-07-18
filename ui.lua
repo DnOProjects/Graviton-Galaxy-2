@@ -41,13 +41,22 @@ function ui.initForGame()
 	ui.addButton(170,400,240,60,255,255,255,"Music",0,0,2,2)
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,2,1)
 
-	ui.addButton(480,100,220,60,255,255,255,"Resume",5,0,"gameMenu1","run")
-	ui.addButton(450,300,280,60,255,255,255,"Back to menu",5,0,"gameMenu1",0)
-	ui.addButton(480,500,220,60,255,255,255,"Exit",2,0,"gameMenu1","exit")
+	ui.addButton(love.graphics.getWidth()/2-145,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
+	ui.addButton(love.graphics.getWidth()/2-145,430,280,60,255,255,255,"Options",1,0,"gameMenu1","gameMenu2")
+	ui.addButton(love.graphics.getWidth()/2-145,530,280,60,255,255,255,"Back to menu",2,0,"gameMenu1",0)
+	ui.addButton(love.graphics.getWidth()/2-145,630,280,60,255,255,255,"Exit",3,0,"gameMenu1","exit")
+
+	ui.addButton(love.graphics.getWidth()/2-145,330,280,60,255,255,255,"Volume",1,0,"gameMenu2","gameMenu3")
+	ui.addButton(love.graphics.getWidth()/2-145,430,280,60,255,255,255,"Fullscreen",1,0,"gameMenu2","fullscreen")
+	ui.addButton(love.graphics.getWidth()/2-145,530,280,60,255,255,255,"Back",2,0,"gameMenu2","gameMenu1")
+
+	ui.addButton(love.graphics.getWidth()/2-145,330,280,60,255,255,255,"Master",1,0,"gameMenu3","gameMenu3")
+	ui.addButton(love.graphics.getWidth()/2-145,430,280,60,255,255,255,"Music",1,0,"gameMenu3","gameMenu3")
+	ui.addButton(love.graphics.getWidth()/2-145,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
 
 end
 
-function ui.inGameMenu(key,inGameMenuPage)
+function ui.inGameMenu(key,inGameMenuPages)
 
 	if inGame == true then
 		if love.keyboard.isDown(key) == true then
@@ -55,18 +64,19 @@ function ui.inGameMenu(key,inGameMenuPage)
 				inGameMenuOpen = not inGameMenuOpen
 				canOpenMenu = false
 			end
+			if inGameMenuOpen == true then
+				menuPage = inGameMenuPages[1]
+			elseif inGameMenuOpen == false then
+				menuPage = runPage
+			end
 		elseif love.keyboard.isDown(key) == false then
 			canOpenMenu = true
 		end
-		if inGameMenuOpen == true then
-			menuPage = inGameMenuPage
-		elseif inGameMenuOpen == false then
-			menuPage = runPage
-		end
-		if menuPage == inGameMenuPage or menuPage == runPage then
-			inGame = true
-		else
-			inGame = false
+		inGame = false
+		for i=1,#inGameMenuPages do
+			if menuPage == inGameMenuPages[i] or menuPage == runPage then
+				inGame = true
+			end
 		end
 	end
 

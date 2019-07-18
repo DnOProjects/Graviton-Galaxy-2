@@ -20,7 +20,7 @@ function love.update(dt)
 	input.update()
 	audio.update()
 	ui.update()
-	ui.inGameMenu("escape","gameMenu1")
+	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
 
 end
 

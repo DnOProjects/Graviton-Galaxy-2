@@ -24,15 +24,22 @@ function ui.initForGame()
 	inGame = false
 	inGameMenuOpen = false
 
-	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",0)
-	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",1)
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",0)
+	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,0,"run")
+	ui.addButton(170,400,240,60,255,255,255,"Options",0,0,0,1)
+	ui.addButton(170,510,240,60,255,255,255,"Exit",0,0,0,"exit")
 
-	ui.addButton(170,290,220,60,255,255,255,"Play",0,0,0,"run")
-	ui.addButton(170,400,220,60,255,255,255,"Options",0,0,0,1)
-	ui.addButton(170,510,220,60,255,255,255,"Exit",0,0,0,"exit")
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options",1)
+	ui.addButton(170,290,240,60,255,255,255,"Volume",0,0,1,2)
+	ui.addButton(170,400,240,60,255,255,255,"Fullscreen",0,0,1,"fullscreen")
+	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,1,0)
 
-	ui.addButton(170,290,240,60,255,255,255,"Fullscreen",0,0,1,"fullscreen")
-	ui.addButton(170,510,220,60,255,255,255,"Back",0,0,1,0)
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",2)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options - Volume",2)
+	ui.addButton(170,290,240,60,255,255,255,"Master",0,0,2,2)
+	ui.addButton(170,400,240,60,255,255,255,"Music",0,0,2,2)
+	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,2,1)
 
 	ui.addButton(480,100,220,60,255,255,255,"Resume",5,0,"gameMenu1","run")
 	ui.addButton(450,300,280,60,255,255,255,"Back to menu",5,0,"gameMenu1",0)

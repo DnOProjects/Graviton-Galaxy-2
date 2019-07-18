@@ -6,12 +6,58 @@ function audio.load()
 
 	fadeSpeed = 0.1
 
+	testSources = {}
+	testSources[1] = {
+		love.audio.newSource("Sounds/test/drum1.ogg","stream"),
+		love.audio.newSource("Sounds/test/drum2.ogg","stream"),
+		love.audio.newSource("Sounds/test/drum3.ogg","stream"),
+	}
+	testSources[2] = {
+		love.audio.newSource("Sounds/test/melody1.ogg","stream"),
+		love.audio.newSource("Sounds/test/melody2.ogg","stream"),
+		love.audio.newSource("Sounds/test/melody3.ogg","stream"),
+	}
+
+	currentlyPlayingTest = {1,0} --0 = silence
+
 end
 
 function audio.update()
 
 	fadeTracks()
 
+	--Check if has ended
+	if (currentlyPlayingTest[1]~=0 and (not testSources[1][currentlyPlayingTest[1]]:isPlaying())) then
+		audio.startNewSegment()
+	end
+	if
+		(currentlyPlayingTest[2]~=0 and (not testSources[2][currentlyPlayingTest[2]]:isPlaying()))
+	then
+		audio.startNewSegment()
+	end
+
+
+end
+
+function audio.startNewSegment()
+	--Start new segment
+	local done = false
+	local oldA = currentlyPlayingTest[1]
+	local a,b = 0,0
+	while not done do
+		a,b = math.random(0,3),math.random(0,3)
+		if math.random(1,4)~=1 then a = oldA end
+		if a~=0 or b~=0 then done = true end
+	end	
+	currentlyPlayingTest = {a,b}
+	if a~=0 then
+		testSources[1][a]:stop()
+		testSources[1][a]:play()
+	end
+	if b~=0 then
+		testSources[2][b]:stop()
+		testSources[2][b]:play()
+	end
 end
 
 function audio.newTrack(ID,track)

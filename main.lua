@@ -29,7 +29,8 @@ function love.update(dt)
 end
 
 function love.draw()
-	
+
+	love.graphics.scale(love.graphics.getWidth()/1920,love.graphics.getHeight()/1080)
 	ui.draw()
 
 end 

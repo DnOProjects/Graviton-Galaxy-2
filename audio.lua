@@ -8,30 +8,40 @@ function audio.load()
 
 	testSources = {}
 	testSources[1] = {
-		love.audio.newSource("Sounds/test/drum1.ogg","stream"),
-		love.audio.newSource("Sounds/test/drum2.ogg","stream"),
-		love.audio.newSource("Sounds/test/drum3.ogg","stream"),
+		love.audio.newSource("Sounds/test/drum1.ogg","static"),
+		love.audio.newSource("Sounds/test/drum2.ogg","static"),
+		love.audio.newSource("Sounds/test/drum3.ogg","static"),
 	}
 	testSources[2] = {
-		love.audio.newSource("Sounds/test/melody1.ogg","stream"),
-		love.audio.newSource("Sounds/test/melody2.ogg","stream"),
-		love.audio.newSource("Sounds/test/melody3.ogg","stream"),
+		love.audio.newSource("Sounds/test/melody1.ogg","static"),
+		love.audio.newSource("Sounds/test/melody1.ogg","static"),
+		love.audio.newSource("Sounds/test/melody3.ogg","static")
 	}
 
-	currentlyPlayingTest = {1,0} --0 = silence
+	currentlyPlayingTest = {0,0} --0 = silence
+	audio.startNewSegment()
 
 end
+
+
 
 function audio.update()
 
 	fadeTracks()
 
+	local segmentLength = 2
+
+	--Fade out
+	if currentlyPlayingTest[2]~=0 then
+		testSources[2][currentlyPlayingTest[2]]:setVolume(1.7-(testSources[2][currentlyPlayingTest[2]]:tell("seconds")/segmentLength))
+	end
+
 	--Check if has ended
-	if (currentlyPlayingTest[1]~=0 and (not testSources[1][currentlyPlayingTest[1]]:isPlaying())) then
+	if (currentlyPlayingTest[1]~=0 and (testSources[1][currentlyPlayingTest[1]]:tell("seconds")>segmentLength)) then
 		audio.startNewSegment()
 	end
 	if
-		(currentlyPlayingTest[2]~=0 and (not testSources[2][currentlyPlayingTest[2]]:isPlaying()))
+		(currentlyPlayingTest[2]~=0 and (testSources[2][currentlyPlayingTest[2]]:tell("seconds")>segmentLength))
 	then
 		audio.startNewSegment()
 	end

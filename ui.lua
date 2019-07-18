@@ -13,6 +13,25 @@ function ui.load()
 
 	backgrounds = {} --template {page,backgroundType,background}
 	buttonArray = {{}}
+	printArray = {{}}
+
+end
+
+function ui.initForGame()
+
+	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",0)
+	ui.addPrint(love.graphics.getWidth()/2-500,100,7,7,0,255,255,"Graviton Galaxy 2",1)
+
+	ui.addButton(170,290,220,60,255,255,255,"Play",0,0,0,"run")
+	ui.addButton(170,400,220,60,255,255,255,"Options",0,0,0,1)
+	ui.addButton(170,510,220,60,255,255,255,"Exit",0,0,0,"exit")
+
+	ui.addButton(170,290,240,60,255,255,255,"Fullscreen",0,0,1,"fullscreen")
+	ui.addButton(170,510,220,60,255,255,255,"Back",0,0,1,0)
+
+	ui.addButton(480,100,220,60,255,255,255,"Resume",5,0,"gameMenu1","run")
+	ui.addButton(450,300,280,60,255,255,255,"Back to menu",5,0,"gameMenu1",0)
+	ui.addButton(480,500,220,60,255,255,255,"Exit",2,0,"gameMenu1","exit")
 
 end
 
@@ -51,6 +70,12 @@ function ui.addButton(x,y,xsize,ysize,r,g,b,text,textx,texty,page,action)
 
 end
 
+function ui.addPrint(x,y,xsize,ysize,r,g,b,text,page,action)
+
+	printArray[#printArray+1]={x,y,xsize,ysize,r,g,b,text,page,action}
+
+end
+
 function rgb(r, g, b)
 
 	return r/255, g/255, b/255
@@ -59,6 +84,7 @@ end
 
 function drawButton()
 
+	love.graphics.setFont(fontNasalization)
 	for i=1,#buttonArray do
 		if buttonArray[i][11] == menuPage then
 			if mouseX > buttonArray[i][1] and mouseX < buttonArray[i][1]+buttonArray[i][3] and mouseY > buttonArray[i][2] and mouseY < buttonArray[i][2]+buttonArray[i][4] then
@@ -84,6 +110,7 @@ end
 
 function drawInputText()
 
+	love.graphics.setFont(fontNasalization)
 	for i=1,#buttonArray do
 		if buttonArray[i][11] == menuPage then
 			love.graphics.setColor(rgb(0, 0, 0))
@@ -108,6 +135,18 @@ function drawInputText()
 				love.graphics.print(buttonArray[i][13],buttonArray[i][1]+font:getWidth(buttonArray[i][8])*3+10,buttonArray[i][2]+10, 0, 3.6, 3.63)
 			end
 		end
+	end
+
+end
+
+function drawPrintText()
+
+	love.graphics.setFont(fontStarCruiser)
+	for i=1,#printArray do
+		if printArray[i][9] == menuPage then
+			love.graphics.setColor(rgb(printArray[i][5], printArray[i][6], printArray[i][7]))
+			love.graphics.print(printArray[i][8],printArray[i][1],printArray[i][2],0,printArray[i][3],printArray[i][4])
+		end 
 	end
 
 end
@@ -241,6 +280,7 @@ function ui.draw()
 	drawMenuBackgrounds()
 	drawButton()
 	drawInputText()
+	drawPrintText()
 
 end
 

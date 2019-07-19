@@ -1,3 +1,5 @@
+local Vector = require "vector"
+
 local physics = {}
 
 function physics.load()
@@ -6,6 +8,22 @@ function physics.load()
     world = love.physics.newWorld(0, 9.81*64, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
     objects = {} -- table to hold all our physical objects
 
+end
+
+function physics.addRectangularObject(args)
+	local object = {}
+	object.body = love.physics.newBody(world,args.position[1],args.position[2],args.bodyType)
+	object.shape = love.physics.newRectangleShape(args.size[1],args.size[2])
+	object.fixture = love.physics.newFixture(object.body,object.shape,args.density)
+	objects[#objects+1] = object
+end
+
+function physics.addCircularObject(args)
+	local object = {}
+	object.body = love.physics.newBody(world,args.position[1],args.position[2],args.bodyType)
+	object.shape = love.physics.newCircleShape(args.radius)
+	object.fixture = love.physics.newFixture(object.body,object.shape,args.density)
+	objects[#objects+1] = object
 end
 
 function physics.update(dt)

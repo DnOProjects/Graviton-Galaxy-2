@@ -5,6 +5,8 @@ local audio = require "audio"
 
 function love.load()
 
+	screen_width, screen_height = love.window.getDesktopDimensions(1)
+
 	math.randomseed(os.time())
 
 	fonts.load()
@@ -26,7 +28,7 @@ end
 
 function love.draw()
 
-	love.graphics.scale(love.graphics.getWidth()/1920,love.graphics.getHeight()/1080)
+	love.graphics.scale(love.graphics.getWidth()/screen_width,love.graphics.getHeight()/screen_height)
 	ui.draw()
 
 end 

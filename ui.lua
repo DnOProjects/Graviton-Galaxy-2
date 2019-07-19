@@ -14,44 +14,45 @@ function ui.load()
 	backgrounds = {} --template {page,backgroundType,background}
 	buttonArray = {{}}
 	printArray = {{}}
+	sliderArray = {{}}
 
 end
 
 function ui.initForGame()
 
-	menuPage = 0
+	menuPage = 1
 	runPage = "inGame"
 	inGame = false
 	inGameMenu = false
 
-	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",0)
-	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,0,"run")
-	ui.addButton(170,400,240,60,255,255,255,"Options",0,0,0,1)
-	ui.addButton(170,510,240,60,255,255,255,"Exit",0,0,0,"exit")
-
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1)
-	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options",1)
-	ui.addButton(170,290,240,60,255,255,255,"Volume",0,0,1,2)
-	ui.addButton(170,400,240,60,255,255,255,"Fullscreen",0,0,1,"fullscreen")
-	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,1,0)
+	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,1,"run")
+	ui.addButton(170,400,240,60,255,255,255,"Options",0,0,1,2)
+	ui.addButton(170,510,240,60,255,255,255,"Exit",0,0,1,"exit")
 
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",2)
-	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options - Volume",2)
-	ui.addButton(170,290,240,60,255,255,255,"Master",0,0,2,2)
-	ui.addButton(170,400,240,60,255,255,255,"Music",0,0,2,2)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options",2)
+	ui.addButton(170,290,240,60,255,255,255,"Volume",0,0,2,3)
+	ui.addButton(170,400,240,60,255,255,255,"Fullscreen",0,0,2,"fullscreen")
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,2,1)
+
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",3)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options - Volume",3)
+	ui.addSlider(170,290,240,80,255,255,255,"Master",2,0,3,100,6,11)
+	ui.addSlider(170,400,240,80,255,255,255,"Music",4,0,3,100,6,11)
+	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,3,2)
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
 	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Options",1,0,"gameMenu1","gameMenu2")
-	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back to menu",2,0,"gameMenu1",0)
+	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back to menu",2,0,"gameMenu1",1)
 	ui.addButton(love.graphics.getWidth()/2-152,630,280,60,255,255,255,"Exit",3,0,"gameMenu1","exit")
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Volume",1,0,"gameMenu2","gameMenu3")
 	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Fullscreen",1,0,"gameMenu2","fullscreen")
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu2","gameMenu1")
 
-	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Master",1,0,"gameMenu3","gameMenu3")
-	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Music",1,0,"gameMenu3","gameMenu3")
+	ui.addSlider(love.graphics.getWidth()/2-152,330,280,80,255,255,255,"Master",1,0,"gameMenu3",100,6,11)
+	ui.addSlider(love.graphics.getWidth()/2-152,430,280,80,255,255,255,"Music",1,0,"gameMenu3",100,6,11)
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
 
 end
@@ -95,6 +96,15 @@ end
 function ui.addPrint(x,y,xsize,ysize,r,g,b,text,page,action)
 
 	printArray[#printArray+1]={x,y,xsize,ysize,r,g,b,text,page,action}
+
+end
+
+function ui.addSlider(x,y,xsize,ysize,r,g,b,text,textx,texty,page,sliderValue,sliderWidth,sliderHeight)
+
+	-- sliderWidth must be even as it is halved
+	-- sliderHeight must be odd as the 3 from the slider line is odd
+
+	sliderArray[#sliderArray+1]={x,y,xsize,ysize,r,g,b,text,textx,texty,page,sliderValue,sliderWidth,sliderHeight}
 
 end
 
@@ -168,7 +178,25 @@ function drawPrintText()
 		if printArray[i][9] == menuPage then
 			love.graphics.setColor(rgb(printArray[i][5], printArray[i][6], printArray[i][7]))
 			love.graphics.print(printArray[i][8],printArray[i][1],printArray[i][2],0,printArray[i][3],printArray[i][4])
-		end 
+		end
+	end
+
+end
+
+function drawSlider()
+
+	love.graphics.setFont(fontNasalization)
+	for i=1,#sliderArray do
+		if sliderArray[i][11] == menuPage then
+		    love.graphics.setColor(rgb(sliderArray[i][5], sliderArray[i][6], sliderArray[i][7]))
+		    love.graphics.rectangle("fill", sliderArray[i][1], sliderArray[i][2], sliderArray[i][3], sliderArray[i][4])
+		    love.graphics.setColor(rgb(0, 0, 0))
+		    love.graphics.rectangle("line", sliderArray[i][1], sliderArray[i][2], sliderArray[i][3], sliderArray[i][4])
+			--NOTE : Text centralisation doesn't work amazingly so use textx and texty to get it right vv
+			love.graphics.print(sliderArray[i][8]..": "..sliderArray[i][12], sliderArray[i][1]+sliderArray[i][3]/2-font:getWidth(sliderArray[i][8]..": "..sliderArray[i][12])*1.5-5+sliderArray[i][9], sliderArray[i][2]+10+sliderArray[i][10])
+			love.graphics.rectangle("line", sliderArray[i][1]+20, sliderArray[i][2]+sliderArray[i][4]-20, sliderArray[i][3]-40, 3)
+			love.graphics.rectangle("fill", sliderArray[i][1]+20+((sliderArray[i][3]-40)/100)*sliderArray[i][12]-sliderArray[i][13]/2, sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20), sliderArray[i][13], sliderArray[i][14])
+		end
 	end
 
 end
@@ -185,7 +213,7 @@ function mousepressed()
 				        elseif buttonArray[i][12] == "run" then
 				        	menuPage = runPage
 				        elseif buttonArray[i][12] == "fullscreen" then
-				        	unusedWidth, unusedHeight, flags = love.window.getMode()
+				        	local unusedWidth, unusedHeight, flags = love.window.getMode()
 				        	if flags.borderless == true then love.window.setMode(1500, 900, {resizable=true,minwidth=800,minheight=600}) elseif flags.borderless == false then love.window.setMode(screen_width, screen_height, {borderless=true}) end
 				        	canClick = false
 				        elseif buttonArray[i][12] == "inputText" then
@@ -199,10 +227,29 @@ function mousepressed()
 				        click:play()
 				    end
 				end
-			elseif love.mouse.isDown(1) == false then
-			    canClick = true
 			end
 		end
+	end
+
+	for i=1,#sliderArray do
+		if sliderArray[i][11] == menuPage then
+			if love.mouse.isDown(1) == true then
+				if mouseX > scale_X*(sliderArray[i][1]+10) and mouseX < scale_X*(sliderArray[i][1]+sliderArray[i][3]-10) and mouseY > scale_Y*((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))-10) and mouseY < scale_Y*(((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))+sliderArray[i][14])+10) then
+					sliderArray[i][12] = round((mouseX-(sliderArray[i][1]+20))/((sliderArray[i][3]-40)/100))
+					if sliderArray[i][12] < 0 then
+						sliderArray[i][12] = 0
+					elseif sliderArray[i][12] > 100 then
+						sliderArray[i][12] = 100
+					end
+				end
+			end
+		end
+	end
+
+	if love.mouse.isDown(1) == true then
+		canClick = false
+	else
+		canClick = true
 	end
 
 end
@@ -305,7 +352,12 @@ function ui.draw()
 	drawButton()
 	drawInputText()
 	drawPrintText()
+	drawSlider()
 
+end
+
+function round(x)
+	return (x + 0.5 - (x + 0.5) % 1)
 end
 
 return ui

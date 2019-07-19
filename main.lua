@@ -39,7 +39,7 @@ end
 function love.draw()
 
 	love.graphics.scale(scale_X,scale_Y)
-	ui.draw()
 	game.draw()
+	ui.draw()
 
 end

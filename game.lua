@@ -1,5 +1,5 @@
 local Vector = require "vector"
-local physics = require "physics"
+local objects = require "objects"
 
 local game = {}
 
@@ -20,7 +20,7 @@ function game.load()
 
 	--let's create a couple blocks to play around with
 	for i=1,20 do
-		physics.addRectangularObject({position=Vector(i*50,550),size=Vector(20,100),density=0.5,bodyType="dynamic"})
+		objects.add({position=Vector(i*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic"})
 	end
 
 end

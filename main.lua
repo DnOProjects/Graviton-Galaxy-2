@@ -2,7 +2,7 @@ local fonts = require "fonts"
 local ui = require "ui"
 local input = require "input"
 local audio = require "audio"
-local physics = require "physics"
+local objects = require "objects"
 local game = require "game"
 
 function love.load()
@@ -17,7 +17,7 @@ function love.load()
 	input.load()
 	ui.load()
 	ui.initForGame()
-	physics.load()
+	objects.load()
 	game.load()
 
 end
@@ -31,7 +31,7 @@ function love.update(dt)
 	audio.update()
 	ui.update()
 	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
-	physics.update(dt)
+	objects.update(dt)
 	game.update(dt)
 
 end

@@ -46,13 +46,13 @@ function ui.initForGame()
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back to menu",2,0,"gameMenu1",0)
 	ui.addButton(love.graphics.getWidth()/2-152,630,280,60,255,255,255,"Exit",3,0,"gameMenu1","exit")
 
-	ui.addButton(love.graphics.getWidth()/2-185,330,280,60,255,255,255,"Volume",1,0,"gameMenu2","gameMenu3")
-	ui.addButton(love.graphics.getWidth()/2-185,430,280,60,255,255,255,"Fullscreen",1,0,"gameMenu2","fullscreen")
-	ui.addButton(love.graphics.getWidth()/2-185,530,280,60,255,255,255,"Back",2,0,"gameMenu2","gameMenu1")
+	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Volume",1,0,"gameMenu2","gameMenu3")
+	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Fullscreen",1,0,"gameMenu2","fullscreen")
+	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu2","gameMenu1")
 
-	ui.addButton(love.graphics.getWidth()/2-185,330,280,60,255,255,255,"Master",1,0,"gameMenu3","gameMenu3")
-	ui.addButton(love.graphics.getWidth()/2-185,430,280,60,255,255,255,"Music",1,0,"gameMenu3","gameMenu3")
-	ui.addButton(love.graphics.getWidth()/2-185,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
+	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Master",1,0,"gameMenu3","gameMenu3")
+	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Music",1,0,"gameMenu3","gameMenu3")
+	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
 
 end
 
@@ -109,7 +109,7 @@ function drawButton()
 	love.graphics.setFont(fontNasalization)
 	for i=1,#buttonArray do
 		if buttonArray[i][11] == menuPage then
-			if mouseX > (love.graphics.getWidth()/screen_width)*buttonArray[i][1] and mouseX < (love.graphics.getWidth()/screen_width)*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > (love.graphics.getHeight()/screen_height)*buttonArray[i][2] and mouseY < (love.graphics.getHeight()/screen_height)*(buttonArray[i][2]+buttonArray[i][4]) then
+			if mouseX > scale_X*buttonArray[i][1] and mouseX < scale_X*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > scale_Y*buttonArray[i][2] and mouseY < scale_Y*(buttonArray[i][2]+buttonArray[i][4]) then
 		    	love.graphics.setColor(rgb(buttonArray[i][5]-150, buttonArray[i][6]-150, buttonArray[i][7]-150))
 		    else
 		        love.graphics.setColor(rgb(buttonArray[i][5], buttonArray[i][6], buttonArray[i][7]))
@@ -137,7 +137,7 @@ function drawInputText()
 		if buttonArray[i][11] == menuPage then
 			love.graphics.setColor(rgb(0, 0, 0))
 	    	if buttonArray[i][12] == "typing" then
-	    		if (love.mouse.isDown(1) == true and (mouseX < (love.graphics.getWidth()/screen_width)*buttonArray[i][1] or mouseX > (love.graphics.getWidth()/screen_width)*(buttonArray[i][1]+buttonArray[i][3]) or mouseY < (love.graphics.getHeight()/screen_height)*buttonArray[i][2] or mouseY > (love.graphics.getHeight()/screen_height)*(buttonArray[i][2]+buttonArray[i][4]))) or menuPage ~= buttonArray[i][11] then
+	    		if (love.mouse.isDown(1) == true and (mouseX < scale_X*buttonArray[i][1] or mouseX > scale_X*(buttonArray[i][1]+buttonArray[i][3]) or mouseY < scale_Y*buttonArray[i][2] or mouseY > scale_Y*(buttonArray[i][2]+buttonArray[i][4]))) or menuPage ~= buttonArray[i][11] then
 					buttonArray[i][12] = "inputText" 
 					lineTimer = 1
 				end
@@ -179,7 +179,7 @@ function mousepressed()
 		if buttonArray[i][11] == menuPage then
 			if love.mouse.isDown(1) == true then
 				if canClick == true then
-					if mouseX > scale_X*buttonArray[i][1] and mouseX < (scale_Y)*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > scale_Y*buttonArray[i][2] and mouseY < scale_Y*(buttonArray[i][2]+buttonArray[i][4]) then
+					if mouseX > scale_X*buttonArray[i][1] and mouseX < scale_X*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > scale_Y*buttonArray[i][2] and mouseY < scale_Y*(buttonArray[i][2]+buttonArray[i][4]) then
 						if buttonArray[i][12] == "exit" then
 				        	love.event.quit()
 				        elseif buttonArray[i][12] == "run" then

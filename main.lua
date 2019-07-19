@@ -3,11 +3,11 @@ local ui = require "ui"
 local input = require "input"
 local audio = require "audio"
 local physics = require "physics"
+local game = require "game"
 
 function love.load()
 
 	screen_width, screen_height = love.window.getDesktopDimensions(1)
-
 	love.window.setMode(screen_width, screen_height, {borderless=true})
 
 	math.randomseed(os.time())
@@ -19,6 +19,7 @@ function love.load()
 	physics.load()
 
 	ui.initForGame()
+	game.load()
 
 end
 
@@ -33,6 +34,7 @@ function love.update(dt)
 	physics.update(dt)
 
 	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
+	game.update(dt)
 
 end
 
@@ -41,6 +43,7 @@ function love.draw()
 	love.graphics.scale(scale_X,scale_Y)
 
 	ui.draw()
+	game.draw()
 
 	-------------
 

@@ -7,6 +7,8 @@ function love.load()
 
 	screen_width, screen_height = love.window.getDesktopDimensions(1)
 
+	love.window.setMode(screen_width, screen_height, {borderless=true})
+
 	math.randomseed(os.time())
 
 	fonts.load()

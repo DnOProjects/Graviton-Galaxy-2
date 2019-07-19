@@ -41,10 +41,10 @@ function ui.initForGame()
 	ui.addButton(170,400,240,60,255,255,255,"Music",0,0,2,2)
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,2,1)
 
-	ui.addButton(love.graphics.getWidth()/2-185,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
-	ui.addButton(love.graphics.getWidth()/2-185,430,280,60,255,255,255,"Options",1,0,"gameMenu1","gameMenu2")
-	ui.addButton(love.graphics.getWidth()/2-185,530,280,60,255,255,255,"Back to menu",2,0,"gameMenu1",0)
-	ui.addButton(love.graphics.getWidth()/2-185,630,280,60,255,255,255,"Exit",3,0,"gameMenu1","exit")
+	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
+	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Options",1,0,"gameMenu1","gameMenu2")
+	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back to menu",2,0,"gameMenu1",0)
+	ui.addButton(love.graphics.getWidth()/2-152,630,280,60,255,255,255,"Exit",3,0,"gameMenu1","exit")
 
 	ui.addButton(love.graphics.getWidth()/2-185,330,280,60,255,255,255,"Volume",1,0,"gameMenu2","gameMenu3")
 	ui.addButton(love.graphics.getWidth()/2-185,430,280,60,255,255,255,"Fullscreen",1,0,"gameMenu2","fullscreen")
@@ -247,7 +247,7 @@ function drawMenuBackgrounds() --Image or colour
 			end
 		end
 	end
-	
+
 end
 
 function ui.setMenuBackground(args)

@@ -247,6 +247,7 @@ function drawMenuBackgrounds() --Image or colour
 			end
 		end
 	end
+	
 end
 
 function ui.setMenuBackground(args)

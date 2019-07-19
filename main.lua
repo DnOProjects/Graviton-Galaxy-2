@@ -18,7 +18,7 @@ function love.load()
 end
 
 function love.update(dt)
-	
+
 	input.update()
 	audio.update()
 	ui.update()
@@ -31,4 +31,4 @@ function love.draw()
 	love.graphics.scale(love.graphics.getWidth()/screen_width,love.graphics.getHeight()/screen_height)
 	ui.draw()
 
-end 
+end

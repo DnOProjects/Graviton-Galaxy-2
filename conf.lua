@@ -5,5 +5,5 @@ function love.conf(t)
 	t.window.height = 1080
 	t.window.borderless = true
 	t.version = "11.1"
-	
+
 end

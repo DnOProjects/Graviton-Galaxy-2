@@ -29,17 +29,17 @@ function love.update(dt)
 
 	input.update()
 	audio.update()
-	ui.update()
-	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
 	physics.update(dt)
 	game.update(dt)
+	ui.update()
+	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
 
 end
 
 function love.draw()
 
 	love.graphics.scale(scale_X,scale_Y)
-	ui.draw()
 	game.draw()
+	ui.draw()
 
 end

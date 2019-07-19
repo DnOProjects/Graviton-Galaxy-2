@@ -10,7 +10,7 @@ end
 
 function physics.update(dt)
 
-    if inGame == true then
+    if inGame == true and inGameMenu == false then
         world:update(dt) --this puts the world into motion
      
         --here we are going to create some keyboard events

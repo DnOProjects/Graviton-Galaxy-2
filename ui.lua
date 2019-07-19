@@ -22,7 +22,7 @@ function ui.initForGame()
 	menuPage = 0
 	runPage = "inGame"
 	inGame = false
-	inGameMenuOpen = false
+	inGameMenu = false
 
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",0)
 	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,0,"run")
@@ -61,12 +61,12 @@ function ui.inGameMenu(key,inGameMenuPages)
 	if inGame == true then
 		if love.keyboard.isDown(key) == true then
 			if canOpenMenu == true then
-				inGameMenuOpen = not inGameMenuOpen
+				inGameMenu = not inGameMenu
 				canOpenMenu = false
 			end
-			if inGameMenuOpen == true then
+			if inGameMenu == true then
 				menuPage = inGameMenuPages[1]
-			elseif inGameMenuOpen == false then
+			elseif inGameMenu == false then
 				menuPage = runPage
 			end
 		elseif love.keyboard.isDown(key) == false then
@@ -291,10 +291,10 @@ function ui.update()
 
 	if menuPage == runPage then
 		inGame = true
-		inGameMenuOpen = false
+		inGameMenu = false
 	elseif menuPage == 0 then
 		inGame = false
-		inGameMenuOpen = false
+		inGameMenu = false
 	end
 
 end

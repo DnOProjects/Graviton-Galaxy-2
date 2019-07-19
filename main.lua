@@ -21,6 +21,9 @@ end
 
 function love.update(dt)
 
+	scale_X = love.graphics.getWidth()/screen_width
+	scale_Y = love.graphics.getHeight()/screen_height
+
 	input.update()
 	audio.update()
 	ui.update()
@@ -30,7 +33,7 @@ end
 
 function love.draw()
 
-	love.graphics.scale(love.graphics.getWidth()/screen_width,love.graphics.getHeight()/screen_height)
+	love.graphics.scale(scale_X,scale_Y)
 	ui.draw()
 
 end

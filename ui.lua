@@ -179,7 +179,7 @@ function mousepressed()
 		if buttonArray[i][11] == menuPage then
 			if love.mouse.isDown(1) == true then
 				if canClick == true then
-					if mouseX > (love.graphics.getWidth()/screen_width)*buttonArray[i][1] and mouseX < (love.graphics.getWidth()/screen_width)*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > (love.graphics.getHeight()/screen_height)*buttonArray[i][2] and mouseY < (love.graphics.getHeight()/screen_height)*(buttonArray[i][2]+buttonArray[i][4]) then
+					if mouseX > scale_X*buttonArray[i][1] and mouseX < (scale_Y)*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > scale_Y*buttonArray[i][2] and mouseY < scale_Y*(buttonArray[i][2]+buttonArray[i][4]) then
 						if buttonArray[i][12] == "exit" then
 				        	love.event.quit()
 				        elseif buttonArray[i][12] == "run" then

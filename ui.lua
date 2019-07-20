@@ -25,6 +25,8 @@ function ui.initForGame()
 	inGame = false
 	inGameMenu = false
 
+	ui.setMenuBackground({page=1,colour={0,0,0}})
+
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1)
 	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,1,"run")
 	ui.addButton(170,400,240,60,255,255,255,"Options",0,0,1,2)
@@ -41,6 +43,8 @@ function ui.initForGame()
 	ui.addSlider(170,290,240,80,255,255,255,"Master",2,0,3,100,6,11)
 	ui.addSlider(170,400,240,80,255,255,255,"Music",4,0,3,100,6,11)
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,3,2)
+
+	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
 	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Options",1,0,"gameMenu1","gameMenu2")
@@ -234,12 +238,14 @@ function mousepressed()
 	for i=1,#sliderArray do
 		if sliderArray[i][11] == menuPage then
 			if love.mouse.isDown(1) == true then
-				if mouseX > scale_X*(sliderArray[i][1]+10) and mouseX < scale_X*(sliderArray[i][1]+sliderArray[i][3]-10) and mouseY > scale_Y*((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))-10) and mouseY < scale_Y*(((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))+sliderArray[i][14])+10) then
-					sliderArray[i][12] = round((mouseX-(sliderArray[i][1]+20))/((sliderArray[i][3]-40)/100))
-					if sliderArray[i][12] < 0 then
-						sliderArray[i][12] = 0
-					elseif sliderArray[i][12] > 100 then
-						sliderArray[i][12] = 100
+				if canClick == true then
+					if mouseX > scale_X*(sliderArray[i][1]+10) and mouseX < scale_X*(sliderArray[i][1]+sliderArray[i][3]-10) and mouseY > scale_Y*((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))-10) and mouseY < scale_Y*(((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))+sliderArray[i][14])+10) then
+						sliderArray[i][12] = round((mouseX-(sliderArray[i][1]+20))/((sliderArray[i][3]-40)/100))
+						if sliderArray[i][12] < 0 then
+							sliderArray[i][12] = 0
+						elseif sliderArray[i][12] > 100 then
+							sliderArray[i][12] = 100
+						end
 					end
 				end
 			end
@@ -282,15 +288,13 @@ end
 function drawMenuBackgrounds() --Image or colour
 
 	for i=1,#backgrounds do
-		for j=1,#backgrounds[i][1] do
-			if menuPage == backgrounds[i][1][j] then
-				if backgrounds[i][2] == "colour" then
-					love.graphics.setBackgroundColor(backgrounds[i][3][1], backgrounds[i][3][2], backgrounds[i][3][3])
-				elseif backgrounds[i][2] == "image" then
-					background = love.graphics.newImage(backgrounds[i][3])
-					love.graphics.setColor(rgb(255,255,255))
-					love.graphics.draw(background, 0, 0, 0, love.graphics.getWidth()/background:getWidth(), love.graphics.getHeight()/background:getHeight())
-				end
+		if menuPage == backgrounds[i][1] then
+			if backgrounds[i][2] == "colour" then
+				love.graphics.setBackgroundColor(backgrounds[i][3][1], backgrounds[i][3][2], backgrounds[i][3][3])
+			elseif backgrounds[i][2] == "image" then
+				background = love.graphics.newImage(backgrounds[i][3])
+				love.graphics.setColor(rgb(255,255,255))
+				love.graphics.draw(background, 0, 0, 0, love.graphics.getWidth()/background:getWidth(), love.graphics.getHeight()/background:getHeight())
 			end
 		end
 	end
@@ -352,7 +356,7 @@ function ui.draw()
 	drawButton()
 	drawInputText()
 	drawPrintText()
-	drawSlider()
+	drawSlider() 
 
 end
 

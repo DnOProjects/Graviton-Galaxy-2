@@ -30,12 +30,8 @@ end
 function game.draw()
 
 	if inGame == true then
-		love.graphics.setBackgroundColor(0.41, 0.53, 0.97) --set the background color to a nice blue
-
 		love.graphics.setColor(0.76, 0.18, 0.05) --set the drawing color to red for the ball
 		love.graphics.circle("fill", objects.ball.body:getX(), objects.ball.body:getY(), objects.ball.shape:getRadius())
-	else
-		love.graphics.setBackgroundColor(0, 0, 0)
 	end
 	
 end

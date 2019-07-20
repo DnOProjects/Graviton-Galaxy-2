@@ -49,7 +49,7 @@ function audio.update()
 end
 
 function audio.startNewSegment()
-	
+
 	--Start new segment
 	local done = false
 	local oldA = currentlyPlayingTest[1]

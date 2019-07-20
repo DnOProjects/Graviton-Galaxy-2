@@ -20,7 +20,6 @@ function love.load()
 	ui.load()
 	ui.initForGame()
 	objects.load()
-	game.load()
 
 end
 
@@ -44,5 +43,11 @@ function love.draw()
 	game.draw()
 	objects.draw()
 	ui.draw()
+
+end
+
+function newGame()
+
+	game.load()
 
 end

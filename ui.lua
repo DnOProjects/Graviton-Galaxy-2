@@ -1,5 +1,6 @@
 local ui = {}
 
+local objects = require("objects")
 local font = love.graphics.getFont()
 local utf8 = require("utf8")
 
@@ -26,7 +27,7 @@ function ui.initForGame()
 	ui.setMenuBackground({page=1,colour={0,0,0}})
 
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1)
-	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,1,"run")
+	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,1,4)
 	ui.addButton(170,400,240,60,255,255,255,"Options",0,0,1,2)
 	ui.addButton(170,510,240,60,255,255,255,"Exit",0,0,1,"exit")
 
@@ -41,6 +42,12 @@ function ui.initForGame()
 	ui.addSlider(170,290,240,80,255,255,255,"Master",2,0,3,volume.master,6,11)
 	ui.addSlider(170,400,240,80,255,255,255,"Music",4,0,3,volume.music,6,11)
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,3,2)
+
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",4)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Play",4)
+	ui.addButton(170,290,240,60,255,255,255,"New Game",0,0,4,"new")
+	ui.addButton(170,400,240,60,255,255,255,"Load Game",0,0,4,"run")
+	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,4,1)
 
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
@@ -234,6 +241,10 @@ function mousepressed()
 				        	love.event.quit()
 				        elseif buttonArray[i][12] == "run" then
 				        	menuPage = runPage
+				        elseif buttonArray[i][12] == "new" then
+				        	menuPage = runPage
+				        	objects.load()
+				        	newGame()
 				        elseif buttonArray[i][12] == "fullscreen" then
 				        	local unusedWidth, unusedHeight, flags = love.window.getMode()
 				        	if flags.borderless == true then love.window.setMode(1500, 900, {resizable=true,minwidth=800,minheight=600}) elseif flags.borderless == false then love.window.setMode(screen_width, screen_height, {borderless=true}) end

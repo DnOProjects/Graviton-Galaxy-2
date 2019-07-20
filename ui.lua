@@ -240,7 +240,11 @@ function mousepressed()
 						if buttonArray[i][12] == "exit" then
 				        	love.event.quit()
 				        elseif buttonArray[i][12] == "run" then
-				        	menuPage = runPage
+				        	if objects.ball ~= nil then
+				        		menuPage = runPage
+				        	else
+				        		menuPage = 4
+				        	end
 				        elseif buttonArray[i][12] == "new" then
 				        	menuPage = runPage
 				        	objects.load()

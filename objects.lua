@@ -1,19 +1,6 @@
 local Class = require "class"
 local Vector = require "vector"
 
-local function pack(...)
-	return { n = select("#", ...), ... }
-end
-
-local function makePolygonTable(object)
-	local list = pack(object.body:getWorldPoints(object.shape:getPoints()))
-	local polygon = {}
-	for i=1,#list/2 do
-		polygon[i] = {list[i*2-1],list[i*2],list[i*2-1]/object.drawing.texture:getWidth(),list[i*2]/object.drawing.texture:getHeight()}
-	end
-	return polygon
-end
-
 local Object = Class:derive("Object")
 
 function Object:new(args)
@@ -28,22 +15,13 @@ function Object:new(args)
 		self.shape = love.physics.newCircleShape(args.shape.radius)
 	end
 	self.fixture = love.physics.newFixture(self.body,self.shape,args.density)
-
-	self:createMesh()
-end
-
-function Object:createMesh()
-	self.drawing.mesh = love.graphics.newMesh(makePolygonTable(self),"fan","dynamic")
-	self.drawing.texture:setWrap("repeat","repeat")
-	self.drawing.mesh:setTexture(self.drawing.texture)
 end
 
 function Object:draw()
-	if self.drawing.type == "textured" and self.shape:getType() == "polygon" then
-		self:createMesh()
+	if self.drawing.type == "image" then
 		love.graphics.setColor(1,1,1)
-		love.graphics.draw(self.drawing.mesh)
-	else
+		love.graphics.draw(self.drawing.image,self.body:getX(),self.body:getY(),self.body:getAngle(),1,1,self.drawing.image:getWidth()/2,self.drawing.image:getHeight()/2)
+	elseif self.drawing.type == "polygon" then
 		love.graphics.setColor(0.20, 0.20, 0.20)
 		love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 	end

@@ -6,7 +6,8 @@ local game = {}
 
 function game.load()
 
-	objects.add({position=Vector(325,800),shape={type="rectangle",size=Vector(2000,300)},density=0.5,bodyType="static",drawing={type="textured",texture=images.dirt}}) --Ground
+	objects.add({position=Vector(500,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="kinematic",drawing={type="texture",texture=images.dirt}}) --Ground
+	objects[1].body:setAngularVelocity(0.1)
 
 	--let's create a ball
 	objects.ball = {}
@@ -17,7 +18,7 @@ function game.load()
 
 	--let's create a couple blocks to play around with
 	for i=1,20 do
-		objects.add({position=Vector(i*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="textured",texture=images.dirt}}) --Blocks
+		objects.add({position=Vector(i*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="image",image=images.block}}) --Blocks
 	end
 
 end

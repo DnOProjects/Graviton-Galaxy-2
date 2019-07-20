@@ -1,20 +1,18 @@
 local Class = require "class"
 local Vector = require "vector"
 
-local function pack(...)
-	return { n = select("#", ...), ... }
-end
-
-local function makePolygonTable(object)
-	local list = pack(object.body:getWorldPoints(object.shape:getPoints()))
-	local polygon = {}
-	for i=1,#list/2 do
-		polygon[i] = {list[i*2-1],list[i*2],list[i*2-1]/object.drawing.texture:getWidth(),list[i*2]/object.drawing.texture:getHeight()}
-	end
-	return polygon
-end
-
 local Object = Class:derive("Object")
+
+--[[DOCUMENTATION:
+	
+	Drawing types:
+		Polygon - draw a filled solid color
+		Image - takes a similarly shaped image to the collision shape
+		Texture - takes any image and matches it to the collision shape using repeating
+
+]]
+
+local drawHitboxes = true
 
 function Object:new(args)
 	self.drawing = args.drawing
@@ -28,27 +26,48 @@ function Object:new(args)
 		self.shape = love.physics.newCircleShape(args.shape.radius)
 	end
 	self.fixture = love.physics.newFixture(self.body,self.shape,args.density)
-
-	self:createMesh()
-end
-
-function Object:createMesh()
-	self.drawing.mesh = love.graphics.newMesh(makePolygonTable(self),"fan","dynamic")
-	self.drawing.texture:setWrap("repeat","repeat")
-	self.drawing.mesh:setTexture(self.drawing.texture)
+	if args.drawing.type == "texture" then
+		--Generate mesh from shape
+		local verticesA = {self.shape:getPoints()}
+		local verticesB = {}
+		local meshSize = Vector(0,0)
+		for i=1,#verticesA/2 do
+			local x,y = verticesA[i*2-1]*2,verticesA[i*2]*2
+			verticesB[i]={x,y,x/self.drawing.texture:getWidth(),y/self.drawing.texture:getHeight(),1,1,1}
+			if x>meshSize[1] then meshSize[1] = x end
+			if y>meshSize[2] then meshSize[2] = y end
+		end
+		local mesh = love.graphics.newMesh(verticesB,"fan","dynamic")
+		--Applying texture
+		self.drawing.texture:setWrap("repeat","repeat","repeat")
+		mesh:setTexture(self.drawing.texture)
+		--Creating blank canvas
+		local canvas = love.graphics.newCanvas(meshSize[1],meshSize[2])
+    	love.graphics.setCanvas(canvas)
+        love.graphics.clear()
+        love.graphics.setBlendMode("alpha")
+        love.graphics.setColor(1,1,1)
+        --Rendering the mesh to the canvas
+        love.graphics.draw(mesh)
+    	love.graphics.setCanvas()
+    	self.drawing.image = canvas
+	end
 end
 
 function Object:draw()
-	if self.drawing.type == "textured" and self.shape:getType() == "polygon" then
-		self:createMesh()
+	if self.drawing.type == "image" or self.drawing.type == "texture"then
 		love.graphics.setColor(1,1,1)
-		love.graphics.draw(self.drawing.mesh)
-	else
+		love.graphics.draw(self.drawing.image,self.body:getX(),self.body:getY(),self.body:getAngle(),1,1,self.drawing.image:getWidth()/2,self.drawing.image:getHeight()/2)
+	elseif self.drawing.type == "polygon" then
 		love.graphics.setColor(0.20, 0.20, 0.20)
 		love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 	end
 end
 
+function Object:drawHitbox()
+	love.graphics.setColor(1,1,1)
+	love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+end
 ----------------------
 
 local objects = {}
@@ -82,6 +101,11 @@ function objects.draw()
 	if inGame == true then
 		for i=1,#objects do
 			objects[i]:draw()
+		end
+		if drawHitboxes then
+			for i=1,#objects do
+				objects[i]:drawHitbox()
+			end
 		end
 	end
 end

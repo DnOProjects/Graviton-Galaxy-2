@@ -63,6 +63,7 @@ end
 
 function newGame()
 
+	objects.purge()
 	game.load()
 
 end

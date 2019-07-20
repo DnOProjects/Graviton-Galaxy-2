@@ -155,4 +155,11 @@ function objects.cleanup()
 	end
 end
 
+function objects.purge()
+	for i=1,#objects do
+		objects[i]:remove()
+	end
+	objects.cleanup()
+end
+
 return objects

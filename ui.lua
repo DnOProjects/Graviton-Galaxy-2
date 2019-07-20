@@ -8,8 +8,6 @@ function ui.load()
 	lineTimer = 0
 
 	mouseX, mouseY = love.mouse.getPosition()
-	
-	click = love.audio.newSource("Sounds/click.wav", "static")
 
 	backgrounds = {} --template {page,backgroundType,background}
 	buttonArray = {{}}
@@ -40,8 +38,8 @@ function ui.initForGame()
 
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",3)
 	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options - Volume",3)
-	ui.addSlider(170,290,240,80,255,255,255,"Master",2,0,3,100,6,11)
-	ui.addSlider(170,400,240,80,255,255,255,"Music",4,0,3,100,6,11)
+	ui.addSlider(170,290,240,80,255,255,255,"Master",2,0,3,volume.master,6,11)
+	ui.addSlider(170,400,240,80,255,255,255,"Music",4,0,3,volume.music,6,11)
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,3,2)
 
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
@@ -55,8 +53,8 @@ function ui.initForGame()
 	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Fullscreen",1,0,"gameMenu2","fullscreen")
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu2","gameMenu1")
 
-	ui.addSlider(love.graphics.getWidth()/2-152,330,280,80,255,255,255,"Master",1,0,"gameMenu3",100,6,11)
-	ui.addSlider(love.graphics.getWidth()/2-152,430,280,80,255,255,255,"Music",1,0,"gameMenu3",100,6,11)
+	ui.addSlider(love.graphics.getWidth()/2-152,330,280,80,255,255,255,"Master",1,0,"gameMenu3",volume.master,6,11)
+	ui.addSlider(love.graphics.getWidth()/2-152,430,280,80,255,255,255,"Music",1,0,"gameMenu3",volume.music,6,11)
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
 
 end
@@ -229,6 +227,7 @@ function mousepressed()
 				        end
 				        click:stop()
 				        click:play()
+				        canSlide = false
 				    end
 				end
 			end
@@ -238,7 +237,7 @@ function mousepressed()
 	for i=1,#sliderArray do
 		if sliderArray[i][11] == menuPage then
 			if love.mouse.isDown(1) == true then
-				if canClick == true then
+				if canSlide == true then
 					if mouseX > scale_X*(sliderArray[i][1]+10) and mouseX < scale_X*(sliderArray[i][1]+sliderArray[i][3]-10) and mouseY > scale_Y*((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))-10) and mouseY < scale_Y*(((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))+sliderArray[i][14])+10) then
 						sliderArray[i][12] = round((mouseX-(sliderArray[i][1]+20))/((sliderArray[i][3]-40)/100))
 						if sliderArray[i][12] < 0 then
@@ -256,6 +255,7 @@ function mousepressed()
 		canClick = false
 	else
 		canClick = true
+		canSlide = true
 	end
 
 end

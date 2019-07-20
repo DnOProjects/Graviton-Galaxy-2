@@ -2,22 +2,22 @@ local audio = {}
 
 function audio.load()
 
+	volume = {master=100,music=100} 
+
 	tracks = {}
 
 	fadeSpeed = 0.1
 
-	testSources = {}
-	testSources[1] = {
+	click = love.audio.newSource("Sounds/click.wav", "static")
+	testSources = {{
 		love.audio.newSource("Sounds/test/drum1.ogg","static"),
 		love.audio.newSource("Sounds/test/drum2.ogg","static"),
-		love.audio.newSource("Sounds/test/drum3.ogg","static"),
-	}
-	testSources[2] = {
+		love.audio.newSource("Sounds/test/drum3.ogg","static")
+	}, {
 		love.audio.newSource("Sounds/test/melody1.ogg","static"),
 		love.audio.newSource("Sounds/test/melody1.ogg","static"),
 		love.audio.newSource("Sounds/test/melody3.ogg","static")
-	}
-
+	}}
 	currentlyPlayingTest = {0,0} --0 = silence
 	audio.startNewSegment()
 
@@ -27,6 +27,14 @@ end
 
 function audio.update()
 
+	-- Sets the volume of all audio sources
+	click:setVolume(volume.master/100)
+	for i=1,#testSources do
+		for j=1,#testSources[i] do
+			testSources[i][j]:setVolume(volume.master/100 * volume.music/100)
+		end
+	end
+
 	fadeTracks()
 
 	local segmentLength = 1.97
@@ -35,9 +43,7 @@ function audio.update()
 	if (currentlyPlayingTest[1]~=0 and (testSources[1][currentlyPlayingTest[1]]:tell("seconds")>segmentLength)) then
 		audio.startNewSegment()
 	end
-	if
-		(currentlyPlayingTest[2]~=0 and (testSources[2][currentlyPlayingTest[2]]:tell("seconds")>segmentLength))
-	then
+	if (currentlyPlayingTest[2]~=0 and (testSources[2][currentlyPlayingTest[2]]:tell("seconds")>segmentLength))	then
 		audio.startNewSegment()
 	end
 

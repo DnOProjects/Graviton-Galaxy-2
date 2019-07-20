@@ -6,7 +6,8 @@ local game = {}
 
 function game.load()
 
-	objects.add({position=Vector(325,800),shape={type="rectangle",size=Vector(2000,300)},density=0.5,bodyType="static",drawing={type="polygon"}}) --Ground
+	objects.add({position=Vector(500,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="kinematic",drawing={type="texture",texture=images.dirt}}) --Ground
+	objects[1].body:setAngularVelocity(0.1)
 
 	--let's create a ball
 	objects.ball = {}

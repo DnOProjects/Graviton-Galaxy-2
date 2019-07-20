@@ -34,18 +34,29 @@ function love.update(dt)
 	audio.update()
 	ui.update()
 	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
-	objects.update(dt)
-	game.update(dt)
+
+	if inGame == true and inGameMenu == false then
+		objects.update(dt)
+		game.update(dt)
+	end
 
 end
 
 function love.draw()
 
 	love.graphics.scale(scale_X,scale_Y)
+
+	love.graphics.push()
+	love.graphics.translate(-cameraPos[1],-cameraPos[2])
 	game.draw()
 	objects.draw()
+	love.graphics.pop()
+
 	ui.draw()
-	love.graphics.setColor(1,1,1)
+
+	love.graphics.setFont(fontNasalization)
+	love.graphics.setColor(1,1,1,1)
+
 	love.graphics.print("FPS: "..love.timer:getFPS())
 
 end

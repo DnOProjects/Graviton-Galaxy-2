@@ -5,11 +5,13 @@ local audio = require "audio"
 local objects = require "objects"
 local game = require "game"
 local images = require "images"
+local Vector = require "vector"
 
 function love.load()
 
 	screen_width, screen_height = love.window.getDesktopDimensions(1)
 	love.window.setMode(screen_width, screen_height, {borderless=true})
+	cameraPos = Vector(0,0)
 
 	math.randomseed(os.time())
 
@@ -44,5 +46,8 @@ function love.draw()
 	game.draw()
 	objects.draw()
 	ui.draw()
+
+	love.graphics.setColor(1,1,1)
+	love.graphics.print("FPS: "..love.timer:getFPS())
 
 end

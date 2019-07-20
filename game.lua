@@ -6,8 +6,10 @@ local game = {}
 
 function game.load()
 
-	objects.add({position=Vector(500,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="kinematic",drawing={type="texture",texture=images.dirt}}) --Ground
-	objects[1].body:setAngularVelocity(0.1)
+	for i=1,10 do
+		objects.add({position=Vector(300*i-300,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}}) --Ground
+		objects[i].body:setAngle(math.random(-10,10)/10)
+	end
 
 	--let's create a ball
 	objects.ball = {}

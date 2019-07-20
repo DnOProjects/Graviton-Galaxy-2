@@ -59,6 +59,26 @@ function ui.initForGame()
 
 end
 
+function ui.updateSliders()
+
+	for i=1,#sliderArray do
+		if sliderArray[i][11] == menuPage then
+			if sliderArray[i][8] == "Master" then
+				volume.master = sliderArray[i][12]
+			elseif sliderArray[i][8] == "Music" then
+				volume.music = sliderArray[i][12]
+			end
+		else
+			if sliderArray[i][8] == "Master" then
+				sliderArray[i][12] = volume.master
+			elseif sliderArray[i][8] == "Music" then
+				sliderArray[i][12] = volume.music
+			end
+		end
+	end
+
+end
+
 function ui.inGameMenu(key,inGameMenuPages)
 
 	if inGame == true then
@@ -339,6 +359,7 @@ function ui.update()
 
 	mouseX, mouseY = love.mouse.getPosition()
 	mousepressed()
+	ui.updateSliders()
 
 	if menuPage == runPage then
 		inGame = true

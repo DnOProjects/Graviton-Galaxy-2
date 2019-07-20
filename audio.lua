@@ -23,8 +23,6 @@ function audio.load()
 
 end
 
-
-
 function audio.update()
 
 	-- Sets the volume of all audio sources
@@ -51,6 +49,7 @@ function audio.update()
 end
 
 function audio.startNewSegment()
+	
 	--Start new segment
 	local done = false
 	local oldA = currentlyPlayingTest[1]
@@ -69,6 +68,7 @@ function audio.startNewSegment()
 		testSources[2][b]:stop()
 		testSources[2][b]:play()
 	end
+
 end
 
 function audio.newTrack(ID,track)

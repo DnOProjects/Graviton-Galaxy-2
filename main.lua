@@ -4,6 +4,7 @@ local input = require "input"
 local audio = require "audio"
 local objects = require "objects"
 local game = require "game"
+local images = require "images"
 
 function love.load()
 
@@ -13,6 +14,7 @@ function love.load()
 	math.randomseed(os.time())
 
 	fonts.load()
+	images.load()
 	audio.load()
 	input.load()
 	ui.load()
@@ -40,6 +42,7 @@ function love.draw()
 
 	love.graphics.scale(scale_X,scale_Y)
 	game.draw()
+	objects.draw()
 	ui.draw()
 
 end

@@ -65,6 +65,7 @@ end
 
 function newGame()
 
+	gameExists = true
 	objects.purge()
 	planet.load()
 

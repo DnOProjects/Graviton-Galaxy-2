@@ -11,6 +11,7 @@ function ui.load()
 	mouseX, mouseY = love.mouse.getPosition()
 
 	backgrounds = {} --template {page,backgroundType,background}
+	inGameMenuArray = {{}}
 	buttonArray = {{}}
 	printArray = {{}}
 	sliderArray = {{}}
@@ -53,6 +54,9 @@ function ui.initForGame()
 
 	-- In-game Menu
 
+	ui.addInGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
+	ui.addInGameMenu("i",{"inventory"})
+
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
@@ -70,7 +74,7 @@ function ui.initForGame()
 
 	-- Inventory
 
-	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"i","run")
+	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"inventory","run")
 
 end
 
@@ -94,29 +98,31 @@ function ui.updateSliders()
 
 end
 
-function ui.inGameMenu(key,inGameMenuPages)
+function ui.updateInGameMenus()
 
-	if inGame == true then
-		if love.keyboard.isDown(key) == true then
-			if canOpenMenu == true then
-				inGameMenu = not inGameMenu
-				canOpenMenu = false
-			end
-			if inGameMenu == true then
-				menuPage = inGameMenuPages[1]
-			elseif inGameMenu == false then
-				menuPage = runPage
-			end
-		elseif love.keyboard.isDown(key) == false then
-			canOpenMenu = true
-		end
-		inGame = false
-		for i=1,#inGameMenuPages do
-			if menuPage == inGameMenuPages[i] or menuPage == runPage then
-				inGame = true
+	for i=1,#inGameMenuArray do
+		if inGame == true then
+			if love.keyboard.isDown(inGameMenuArray[i].key) == true then
+				if canOpenMenu == true then
+					inGameMenuArray[i].open = not inGameMenuArray[i].open
+					canOpenMenu = false
+				end
+				if inGameMenuArray[i].open == true then
+					menuPage = inGameMenuArray[i].pages[1]
+				elseif inGameMenuArray[i].open == false then
+					menuPage = runPage
+				end
+			elseif love.keyboard.isDown(inGameMenuArray[i].key) == false then
+				canOpenMenu = true
 			end
 		end
 	end
+
+end
+
+function ui.addInGameMenu(key,pages)
+
+	inGameMenuArray[#inGameMenuArray]={key=key,pages=pages,open=false}
 
 end
 
@@ -248,11 +254,10 @@ function mousepressed()
 						if buttonArray[i][12] == "exit" then
 				        	love.event.quit()
 				        elseif buttonArray[i][12] == "run" then
-				        	if objects.ball ~= nil then
-				        		menuPage = runPage
-				        	else
-				        		menuPage = 4
-				        	end
+				        	menuPage = runPage
+				        	for i=1,#inGameMenuArray do
+								inGameMenuArray[i].open = false
+							end
 				        elseif buttonArray[i][12] == "new" then
 				        	menuPage = runPage
 				        	objects.load()
@@ -382,14 +387,33 @@ function ui.update()
 
 	mouseX, mouseY = love.mouse.getPosition()
 	mousepressed()
+
 	ui.updateSliders()
+	ui.updateInGameMenus()
+
+	inGame = false
 
 	if menuPage == runPage then
 		inGame = true
 		inGameMenu = false
-	elseif menuPage == 0 then
+	elseif menuPage == 1 then
 		inGame = false
-		inGameMenu = false
+		for i=1,#inGameMenuArray do
+			inGameMenuArray[i].open = false
+		end
+	end
+
+	inGameMenu = false
+
+	for i=1,#inGameMenuArray do
+		if inGameMenuArray[i].open == true then
+			inGameMenu = true
+		end
+		for j=1,#inGameMenuArray[i].pages do
+			if menuPage == inGameMenuArray[i].pages[j] then
+				inGame = true
+			end
+		end
 	end
 
 end

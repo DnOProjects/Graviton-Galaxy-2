@@ -18,7 +18,6 @@ function planet.load()
 	for i=1,numSegments do
 		local pr = r
 		r = math.random(1,3)
-
 		if r==2 then--Flat
 			if pr==1 then y=y+h end
 		elseif r==3 then--Up
@@ -49,10 +48,6 @@ end
 
 function planet.update(dt)
 	cameraPos = Vector(objects[1].body:getX()-screen_width/2,objects[1].body:getY()-screen_height/2)
-end
-
-function planet.draw()
-
 end
 
 return planet

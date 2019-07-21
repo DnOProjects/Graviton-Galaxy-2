@@ -24,6 +24,7 @@ function ui.initForGame()
 	runPage = "inGame"
 	inGame = false
 	inGameMenu = false
+	gameExists = false
 
 	-- Base Menu
 
@@ -49,7 +50,7 @@ function ui.initForGame()
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",4)
 	ui.addPrint(170,190,0.8,0.8,0,150,255,"Play",4)
 	ui.addButton(170,290,240,60,255,255,255,"New Game",0,0,4,"new")
-	ui.addButton(170,400,240,60,255,255,255,"Load Game",0,0,4,"run")
+	-- This is where load is when a game has been created
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,4,1)
 
 	-- In-game Menu
@@ -262,6 +263,9 @@ function mousepressed()
 				        elseif buttonArray[i][12] == "new" then
 				        	menuPage = runPage
 				        	objects.load()
+				        	if gameExists == false then
+				        		ui.addButton(170,400,240,60,255,255,255,"Load Game",0,0,4,"run")
+				        	end
 				        	newGame()
 				        elseif buttonArray[i][12] == "fullscreen" then
 				        	local unusedWidth, unusedHeight, flags = love.window.getMode()

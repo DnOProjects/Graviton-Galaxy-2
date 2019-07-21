@@ -55,7 +55,6 @@ function ui.initForGame()
 	-- In-game Menu
 
 	ui.addInGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
-	ui.addInGameMenu("i",{"inventory"})
 
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
@@ -73,6 +72,8 @@ function ui.initForGame()
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
 
 	-- Inventory
+
+	ui.addInGameMenu("i",{"inventory"})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"inventory","run")
 
@@ -100,12 +101,12 @@ end
 
 function ui.updateInGameMenus()
 
-	for i=1,#inGameMenuArray do
-		if inGame == true then
+	if inGame == true then
+		for i=1,#inGameMenuArray do
 			if love.keyboard.isDown(inGameMenuArray[i].key) == true then
-				if canOpenMenu == true then
+				if inGameMenuArray[i].canOpen == true then
 					inGameMenuArray[i].open = not inGameMenuArray[i].open
-					canOpenMenu = false
+					inGameMenuArray[i].canOpen = false
 				end
 				if inGameMenuArray[i].open == true then
 					menuPage = inGameMenuArray[i].pages[1]
@@ -113,7 +114,7 @@ function ui.updateInGameMenus()
 					menuPage = runPage
 				end
 			elseif love.keyboard.isDown(inGameMenuArray[i].key) == false then
-				canOpenMenu = true
+				inGameMenuArray[i].canOpen = true
 			end
 		end
 	end
@@ -122,7 +123,7 @@ end
 
 function ui.addInGameMenu(key,pages)
 
-	inGameMenuArray[#inGameMenuArray]={key=key,pages=pages,open=false}
+	inGameMenuArray[#inGameMenuArray]={key=key,pages=pages,open=false,canOpen=true}
 
 end
 

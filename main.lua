@@ -47,7 +47,6 @@ function love.draw()
 
 	love.graphics.push()
 	love.graphics.translate(-cameraPos[1],-cameraPos[2])
-	planet.draw()
 	objects.draw()
 	love.graphics.pop()
 
@@ -57,6 +56,10 @@ function love.draw()
 	love.graphics.setColor(1,1,1,1)
 
 	love.graphics.print("FPS: "..love.timer:getFPS())
+	if inGame == true then
+		love.graphics.print("X: "..round(objects[1].body:getX()),1700,0)
+		love.graphics.print("Y: "..round(objects[1].body:getY()),1700,40)
+	end
 
 end
 

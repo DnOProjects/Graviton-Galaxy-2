@@ -12,7 +12,7 @@ local Object = Class:derive("Object")
 
 ]]
 
-local drawHitboxes = true
+local drawHitboxes = false
 
 function Object:new(args)
 	self.drawing = args.drawing

@@ -55,7 +55,8 @@ function ui.initForGame()
 
 	-- In-game Menu
 
-	ui.addInGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
+	--ui.addInGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
+	inGameMenuArray[1]={key="escape",pages={"gameMenu1","gameMenu2","gameMenu3"},open=false,canOpen=true}
 
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
@@ -74,7 +75,7 @@ function ui.initForGame()
 
 	-- Inventory
 
-	--ui.addInGameMenu("i",{"inventory"})
+	ui.addInGameMenu("i",{"inventory"})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"inventory","run")
 
@@ -124,7 +125,7 @@ end
 
 function ui.addInGameMenu(key,pages)
 
-	inGameMenuArray[#inGameMenuArray]={key=key,pages=pages,open=false,canOpen=true}
+	inGameMenuArray[#inGameMenuArray+1]={key=key,pages=pages,open=false,canOpen=true}
 
 end
 
@@ -237,7 +238,7 @@ function drawSlider()
 		    love.graphics.rectangle("fill", sliderArray[i][1], sliderArray[i][2], sliderArray[i][3], sliderArray[i][4])
 		    love.graphics.setColor(rgb(0, 0, 0))
 		    love.graphics.rectangle("line", sliderArray[i][1], sliderArray[i][2], sliderArray[i][3], sliderArray[i][4])
-			--NOTE : Text centralisation doesn't work amazingly so use textx and texty to get it right vv
+			-- NOTE : Text centralisation doesn't work amazingly so use textx and texty to get it right vv
 			love.graphics.print(sliderArray[i][8]..": "..sliderArray[i][12], sliderArray[i][1]+sliderArray[i][3]/2-font:getWidth(sliderArray[i][8]..": "..sliderArray[i][12])*1.5-5+sliderArray[i][9], sliderArray[i][2]+10+sliderArray[i][10])
 			love.graphics.rectangle("line", sliderArray[i][1]+20, sliderArray[i][2]+sliderArray[i][4]-20, sliderArray[i][3]-40, 3)
 			love.graphics.rectangle("fill", sliderArray[i][1]+20+((sliderArray[i][3]-40)/100)*sliderArray[i][12]-sliderArray[i][13]/2, sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20), sliderArray[i][13], sliderArray[i][14])

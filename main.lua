@@ -6,6 +6,7 @@ local objects = require "objects"
 local planet = require "planet"
 local images = require "images"
 local Vector = require "vector"
+local player = require "player"
 
 function love.load()
 
@@ -36,6 +37,7 @@ function love.update(dt)
 
 	if inGame == true and inGameMenu == false then
 		objects.update(dt)
+		player.update(dt)
 		planet.update(dt)
 	end
 
@@ -67,6 +69,7 @@ function newGame()
 
 	gameExists = true
 	objects.purge()
+	player.load()
 	planet.load()
 
 end

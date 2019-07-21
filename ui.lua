@@ -1,8 +1,8 @@
-local ui = {}
-
 local objects = require("objects")
 local font = love.graphics.getFont()
 local utf8 = require("utf8")
+
+local ui = {}
 
 function ui.load()
 

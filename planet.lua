@@ -37,6 +37,8 @@ function planet.load()
 		x=x+w
 	end
 
+	objects[1].body:setY(objects[math.floor(#objects/2)].body:getY()) --Moves player to surface
+
 	objects.add({position=Vector(40,0),shape={type="polygon",vertices={0,0,400,0,300,100,50,50}},density=0.5,bodyType="dynamic",drawing={type="texture",texture=images.block}})
 	objects.add({position=Vector(60,0),shape={type="circle",radius=100},density=0.2,bodyType="dynamic",drawing={type="image",image=images.planet}})
 

@@ -9,8 +9,10 @@ function game.load()
 	objects.add({position=Vector(300,300),shape={type="circle",radius=20},density=1,bodyType="dynamic",drawing={type="solid"}})
 
 	for i=1,10 do
-		objects.add({position=Vector(300*i-300,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}}) --Ground
-		objects[i].body:setAngle(math.random(-10,10)/10)
+		objects.add({position=Vector(800*i-800,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}}) --Ground
+		if i%2==0 then
+			objects[i].body:setAngle(math.random(-5,5)/10)
+		end
 	end
 
 	objects.add({position=Vector(300,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}}) --Ground

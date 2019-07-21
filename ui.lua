@@ -24,6 +24,8 @@ function ui.initForGame()
 	inGame = false
 	inGameMenu = false
 
+	-- Base Menu
+
 	ui.setMenuBackground({page=1,colour={0,0,0}})
 
 	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1)
@@ -49,6 +51,8 @@ function ui.initForGame()
 	ui.addButton(170,400,240,60,255,255,255,"Load Game",0,0,4,"run")
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,4,1)
 
+	-- In-game Menu
+
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
@@ -63,6 +67,10 @@ function ui.initForGame()
 	ui.addSlider(love.graphics.getWidth()/2-152,330,280,80,255,255,255,"Master",1,0,"gameMenu3",volume.master,6,11)
 	ui.addSlider(love.graphics.getWidth()/2-152,430,280,80,255,255,255,"Music",1,0,"gameMenu3",volume.music,6,11)
 	ui.addButton(love.graphics.getWidth()/2-152,530,280,60,255,255,255,"Back",2,0,"gameMenu3","gameMenu2")
+
+	-- Inventory
+
+	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"i","run")
 
 end
 

@@ -34,6 +34,7 @@ function love.update(dt)
 	audio.update()
 	ui.update()
 	ui.inGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
+	ui.inGameMenu("i",{"inventory"})
 
 	if inGame == true and inGameMenu == false then
 		objects.update(dt)

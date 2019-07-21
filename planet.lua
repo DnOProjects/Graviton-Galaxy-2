@@ -2,9 +2,9 @@ local Vector = require "vector"
 local objects = require "objects"
 local images = require "images"
 
-local game = {}
+local planet = {}
 
-function game.load()
+function planet.load()
 
 	objects.add({position=Vector(300,300),shape={type="circle",radius=20},density=1,bodyType="dynamic",drawing={type="solid"}})
 
@@ -24,12 +24,12 @@ function game.load()
 	end
 end
 
-function game.update(dt)
+function planet.update(dt)
 	cameraPos = Vector(objects[1].body:getX()-screen_width/2,objects[1].body:getY()-screen_height/2)
 end
 
-function game.draw()
+function planet.draw()
 
 end
 
-return game
+return planet

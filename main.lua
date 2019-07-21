@@ -3,7 +3,7 @@ local ui = require "ui"
 local input = require "input"
 local audio = require "audio"
 local objects = require "objects"
-local game = require "game"
+local planet = require "planet"
 local images = require "images"
 local Vector = require "vector"
 
@@ -37,7 +37,7 @@ function love.update(dt)
 
 	if inGame == true and inGameMenu == false then
 		objects.update(dt)
-		game.update(dt)
+		planet.update(dt)
 	end
 
 end
@@ -48,7 +48,7 @@ function love.draw()
 
 	love.graphics.push()
 	love.graphics.translate(-cameraPos[1],-cameraPos[2])
-	game.draw()
+	planet.draw()
 	objects.draw()
 	love.graphics.pop()
 
@@ -64,6 +64,6 @@ end
 function newGame()
 
 	objects.purge()
-	game.load()
+	planet.load()
 
 end

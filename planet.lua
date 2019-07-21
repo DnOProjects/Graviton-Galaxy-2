@@ -8,14 +8,33 @@ function planet.load()
 
 	objects.add({position=Vector(300,300),shape={type="circle",radius=20},density=1,bodyType="dynamic",drawing={type="solid"}})
 
-	for i=1,10 do
-		objects.add({position=Vector(800*i-800,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}}) --Ground
-		if i%2==0 then
-			objects[i].body:setAngle(math.random(-5,5)/10)
+	local planetDepth = 1000
+
+	local x,y = 0,800
+	local w,h = 500,50
+	local r = 0
+	for i=1,100 do
+		local pr = r
+		r = math.random(1,3)
+
+		if r==2 then--Flat
+			if pr==1 then y=y+h end
+		elseif r==3 then--Up
+			if pr~=1 then y=y-h end
+			objects.add({position=Vector(x,y),shape={type="polygon",vertices={0,h,w,0,w,h}},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}})
+		else--Down
+			if pr==1 then y=y+h end
+			objects.add({position=Vector(x,y),shape={type="polygon",vertices={0,h,0,0,w,h}},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}})
 		end
+
+		if r~=2 then
+			objects.add({position=Vector(x,y),shape={type="polygon",vertices={0,h,w,h,0,planetDepth,w,planetDepth}},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}})
+		else
+			objects.add({position=Vector(x,y),shape={type="polygon",vertices={0,0,w,0,0,planetDepth,w,planetDepth}},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}})
+		end
+		x=x+w
 	end
 
-	objects.add({position=Vector(300,800),shape={type="rectangle",size=Vector(800,300)},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}}) --Ground
 	objects.add({position=Vector(40,0),shape={type="polygon",vertices={0,0,400,0,300,100,50,50}},density=0.5,bodyType="dynamic",drawing={type="texture",texture=images.block}})
 	objects.add({position=Vector(60,0),shape={type="circle",radius=100},density=0.2,bodyType="dynamic",drawing={type="image",image=images.planet}})
 

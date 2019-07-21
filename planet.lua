@@ -7,6 +7,15 @@ local planet = {}
 function planet.load()
 
 	objects.add({position=Vector(300,300),shape={type="rectangle",size=Vector(20,60)},density=1,bodyType="dynamic",drawing={type="image",image=images.player}})
+
+	objects.add({position=Vector(40,0),shape={type="polygon",vertices={0,0,400,0,300,100,50,50}},density=0.5,bodyType="dynamic",drawing={type="texture",texture=images.block}})
+	objects.add({position=Vector(60,0),shape={type="circle",radius=100},density=0.2,bodyType="dynamic",drawing={type="image",image=images.planet}})
+
+	for i=1,20 do
+		objects.add({position=Vector(i*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="image",image=images.block}}) --Blocks
+	end
+
+	
 	objects[1].body:setFixedRotation(true)
 
 	local planetDepth = 1000
@@ -36,14 +45,8 @@ function planet.load()
 		x=x+w
 	end
 
-	objects[1].body:setY(objects[math.floor(#objects/2)].body:getY()) --Moves player to surface
+	objects[1].body:setY(objects[math.floor(#objects/2)].body:getY()-100) --Moves player to surface
 
-	objects.add({position=Vector(40,0),shape={type="polygon",vertices={0,0,400,0,300,100,50,50}},density=0.5,bodyType="dynamic",drawing={type="texture",texture=images.block}})
-	objects.add({position=Vector(60,0),shape={type="circle",radius=100},density=0.2,bodyType="dynamic",drawing={type="image",image=images.planet}})
-
-	for i=1,20 do
-		objects.add({position=Vector(i*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="image",image=images.block}}) --Blocks
-	end
 end
 
 function planet.update(dt)

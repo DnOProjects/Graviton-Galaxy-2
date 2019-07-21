@@ -73,7 +73,7 @@ function ui.initForGame()
 
 	-- Inventory
 
-	ui.addInGameMenu("i",{"inventory"})
+	--ui.addInGameMenu("i",{"inventory"})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"inventory","run")
 

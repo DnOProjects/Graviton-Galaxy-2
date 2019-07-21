@@ -55,7 +55,7 @@ function ui.initForGame()
 	-- In-game Menu
 
 	ui.addInGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
-	--ui.updateInGameMenu("i",{"inventory"})
+	ui.addInGameMenu("i",{"inventory"})
 
 	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
@@ -74,7 +74,7 @@ function ui.initForGame()
 
 	-- Inventory
 
-	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"i","run")
+	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"inventory","run")
 
 end
 

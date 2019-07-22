@@ -15,8 +15,10 @@ local Object = Class:derive("Object")
 local drawHitboxes = false
 
 function Object:new(args)
+	self.worldNum = args.worldNum
 	self.drawing = args.drawing
 	self.body = love.physics.newBody(world,args.position[1],args.position[2],args.bodyType)
+	self.body:setActive(false)
 	self.shapeType = args.shape.type
 	if args.shape.type == "rectangle" then
 		self.shape = love.physics.newRectangleShape(args.shape.size[1],args.shape.size[2])
@@ -109,7 +111,7 @@ local objects = {}
 
 function objects.load()
     love.physics.setMeter(64) --the length of a meter our worlds will be 64px
-    world = love.physics.newWorld(0, 9.81*64, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
+    world = love.physics.newWorld(0, 10*64, true)
 end
 
 function objects.add(args)
@@ -127,11 +129,15 @@ end
 function objects.draw()
 	if inGame == true then
 		for i=1,#objects do
-			objects[i]:draw()
+			if objects[i].worldNum == currentWorld then
+				objects[i]:draw()
+			end
 		end
 		if drawHitboxes then
 			for i=1,#objects do
-				objects[i]:drawHitbox()
+				if objects[i].worldNum == currentWorld then
+					objects[i]:drawHitbox()
+				end
 			end
 		end
 	end
@@ -150,6 +156,16 @@ function objects.purge()
 		objects[i]:remove()
 	end
 	objects.cleanup()
+end
+
+function objects.getObjectsByWorld(worldNum)
+	local toReturn = {}
+	for i=1,#objects do
+		if objects[i].worldNum == worldNum then
+			toReturn[#toReturn+1] = objects[i]
+		end
+	end
+	return toReturn
 end
 
 return objects

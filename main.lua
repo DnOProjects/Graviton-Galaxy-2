@@ -2,13 +2,15 @@ local fonts = require "fonts"
 local ui = require "ui"
 local input = require "input"
 local audio = require "audio"
-local objects = require "objects"
-local planet = require "planet"
+objects = require "objects"
+planets = require "planets"
 local images = require "images"
 local Vector = require "vector"
 local player = require "player"
 
 function love.load()
+
+	currentWorld = 1
 
 	screen_width, screen_height = love.window.getDesktopDimensions(1)
 	love.window.setMode(screen_width, screen_height, {borderless=true})
@@ -38,7 +40,7 @@ function love.update(dt)
 	if inGame == true and inGameMenu == false then
 		objects.update(dt)
 		player.update(dt)
-		planet.update(dt)
+		planets.update(dt)
 	end
 
 end
@@ -61,6 +63,8 @@ function love.draw()
 	if inGame == true then
 		love.graphics.print("X: "..round(objects[1].body:getX()),1700,0)
 		love.graphics.print("Y: "..round(objects[1].body:getY()),1700,40)
+		love.graphics.print("World: "..currentWorld,1700,80)
+		love.graphics.print("#objs: "..#objects,0,40)
 	end
 
 end
@@ -69,7 +73,11 @@ function newGame()
 
 	gameExists = true
 	objects.purge()
+
+	planets.loadWorlds()
 	player.load()
-	planet.load()
+	planets.loadObjects()
+	planets.changeWorld(1)
+	player.land()
 
 end

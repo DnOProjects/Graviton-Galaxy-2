@@ -4,8 +4,8 @@ local images = require "images"
 local planets = {}
 
 function planets.loadWorlds()
-	for i=1,5 do
-		planets[i] = {gravity = math.random(5,20)*64}
+	for i=1,2 do
+		planets[i] = {gravity = 64*math.random(5,20)}
 	end
 end
 
@@ -19,6 +19,7 @@ function planets.changeWorld(worldNum)
 			object.body:setActive(false)
 		end
 	end
+	world:setGravity(0,planets[worldNum].gravity)
 end
 
 function planets.loadObjects()

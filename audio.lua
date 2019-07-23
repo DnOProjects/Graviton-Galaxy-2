@@ -2,7 +2,7 @@ local audio = {}
 
 function audio.load()
 
-	volume = {master=100,music=100} 
+	volume = {master=0,music=100} 
 
 	tracks = {}
 

@@ -4,8 +4,8 @@ local images = require "images"
 local planets = {}
 
 function planets.loadWorlds()
-	for i=1,2 do
-		planets[i] = {gravity = 64*math.random(5,20)}
+	for i=1,20 do
+		planets[i] = {gravity = 64*math.random(5,20), bounds={start=-1000,stop=8000}}
 	end
 end
 

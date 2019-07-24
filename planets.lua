@@ -4,7 +4,8 @@ local images = require "images"
 local planets = {}
 
 function planets.loadWorlds()
-	for i=1,20 do
+	numWorlds = 5
+	for i=1,numWorlds do
 		planets[i] = {gravity = 64*math.random(5,20), bounds={start=-1000,stop=8000}}
 	end
 end
@@ -62,6 +63,29 @@ end
 
 function planets.update(dt)
 	cameraPos = Vector(objects[1].body:getX()-screen_width/2,objects[1].body:getY()-screen_height/2)
+end
+
+function planets.draw()
+	drawOcean(-50000,1000,100000,1000,4)
+end
+
+function drawOcean(start,y,length,depth,detail)
+	love.graphics.setColor(0,0,1)
+	love.graphics.rectangle("fill",start,y-5,length,depth)
+	love.graphics.setColor(1,1,1)
+	drawSin(start,y-10,length,length*detail*0.01)
+	love.graphics.setColor(0,0,1)
+	drawSin(start,y,length,length*detail*0.01)
+end
+
+function drawSin(x,y,length,segments)
+	local points = {}
+	for i=1,segments do
+		points[i*2-1] = i*(length/segments)+x
+		points[i*2] = math.sin(i*(length/segments)*0.02+timer)*10+y
+	end
+	love.graphics.setLineWidth(10)
+	love.graphics.line(points)
 end
 
 return planets

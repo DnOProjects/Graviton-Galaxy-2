@@ -55,7 +55,7 @@ function love.draw()
 
 	love.graphics.push()
 	love.graphics.translate(-cameraPos[1],-cameraPos[2])
-	drawOcean(-50000,1000,100000,1000,4)
+	planets.draw()
 	objects.draw()
 	love.graphics.pop()
 
@@ -91,6 +91,7 @@ function drawSin(x,y,length,segments)
 	love.graphics.setLineWidth(10)
 	love.graphics.line(points)
 end
+
 
 function newGame()
 

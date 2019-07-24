@@ -426,6 +426,7 @@ end
 
 function ui.draw()
 
+	love.graphics.setLineWidth(1)
 	drawMenuBackgrounds()
 	drawButton()
 	drawInputText()

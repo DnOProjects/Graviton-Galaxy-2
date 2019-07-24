@@ -78,7 +78,7 @@ function drawOcean(start,y,length,depth,detail)
 	love.graphics.rectangle("fill",start,y-5,length,depth)
 	love.graphics.setColor(1,1,1)
 	drawSin(start,y-10,length,length*detail*0.01)
-	love.graphics.setColor(0,0,1)
+	love.graphics.setColor(0.2,0.2,1)
 	drawSin(start,y,length,length*detail*0.01)
 end
 

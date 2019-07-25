@@ -90,7 +90,7 @@ function Object:draw()
 			love.graphics.draw(self.drawing.image,self.body:getX(),self.body:getY(),self.body:getAngle())
 		end
 	elseif self.drawing.type == "solid" then
-		love.graphics.setColor(0.20*underwaterColor, 0.20*underwaterColor, 0.20)
+		love.graphics.setColor(0.2*underwaterColor, 0.2*underwaterColor, 0.2)
 		if self.shapeType == "rectangle" or self.shapeType == "polygon" then
 			love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 		elseif self.shapeType == "circle" then

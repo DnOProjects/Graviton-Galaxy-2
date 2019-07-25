@@ -21,13 +21,17 @@ function player.update(dt)
 
 	if love.keyboard.isDown("d") then --press the d key to push to the right
         objects[1].body:applyForce(400, 0)
-    elseif love.keyboard.isDown("a") then --press the a key to push to the left
+    end
+    if love.keyboard.isDown("a") then --press the a key to push to the left
         objects[1].body:applyForce(-400, 0)
-    elseif love.keyboard.isDown("w") or love.keyboard.isDown("space") then
-        objects[1].body:applyForce(0, -800)
-    elseif love.keyboard.isDown("s") then
+    end
+    if love.keyboard.isDown("w") or love.keyboard.isDown("space") then
+        objects[1].body:applyForce(0, -500)
+    end
+    if love.keyboard.isDown("s") then
         objects[1].body:applyForce(0, 400)
-    elseif love.keyboard.isDown("return") and worldChanged == false then --press the enter key to set in the air
+    end
+    if love.keyboard.isDown("return") and worldChanged == false then --press the enter key to set in the air
         planets.changeWorld(math.random(1,numWorlds))
         player.land()
         objects[1].body:setPosition(650/2, 650/2)

@@ -45,7 +45,7 @@ function player.update(dt)
     	worldChanged = false
     end
 
-    if playerObject.body:getY() >= currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY() then
+    if playerObject.body:getY() >= (currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY()-20) then
        playerObject.body:applyForce(0, -5)
     end
 

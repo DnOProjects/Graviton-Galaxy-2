@@ -9,6 +9,8 @@ local player = require "player"
 
 function love.load()
 
+	seaLevel = 1000
+
 	currentWorld = 1
 
 	screen_width, screen_height = love.window.getDesktopDimensions(1)
@@ -62,8 +64,8 @@ function love.draw()
 		love.graphics.print("#objs: "..#objects,0,40)
 		love.graphics.translate(-cameraPos[1],-cameraPos[2])
 		planets.draw()
+		objects.draw(seaLevel)
 	end
-	objects.draw()
 
 	love.graphics.pop()
 

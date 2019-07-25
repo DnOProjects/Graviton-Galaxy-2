@@ -5,16 +5,16 @@ local images = require "images"
 local player = {}
 
 function player.load()
-	objects.add({worldNum=currentWorld,position=Vector(300,200),shape={type="rectangle",size=Vector(20,60)},density=1,bodyType="dynamic",drawing={type="image",image=images.player}})
+	objects.add({worldNum=currentWorld,recolorUnderwater=true,position=Vector(300,200),shape={type="rectangle",size=Vector(20,60)},density=1,bodyType="dynamic",drawing={type="image",image=images.player}})
     objects[1].body:setFixedRotation(true)
     worldChanged = false
 end
 
-function player.land(playerObject)
+function player.land()
     local playerObject = objects[1]
     local currentWorldObjects = objects.getObjectsByWorld(currentWorld)
     playerObject.worldNum = currentWorld
-    playerObject.body:setY(currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY()-100) --Moves player to surface
+    playerObject.body:setY(currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY()-150) --Moves player to surface
     playerObject.body:setActive(true)
 end
 
@@ -45,8 +45,8 @@ function player.update(dt)
     	worldChanged = false
     end
 
-    if playerObject.body:getY() >= (currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY()-20) then
-       playerObject.body:applyForce(0, -5)
+    if playerObject.body:getY() >= currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY() then
+       playerObject.body:applyForce(0, -100)
     end
 
 end

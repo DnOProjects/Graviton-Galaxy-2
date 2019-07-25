@@ -15,6 +15,7 @@ local Object = Class:derive("Object")
 local drawHitboxes = false
 
 function Object:new(args)
+	self.recolorUnderwater = args.recolorUnderwater
 	self.worldNum = args.worldNum
 	self.drawing = args.drawing
 	self.body = love.physics.newBody(world,args.position[1],args.position[2],args.bodyType)
@@ -73,17 +74,23 @@ function Object:generateImageCanvas()
 end
 
 function Object:draw()
+	local currentWorldObjects = objects.getObjectsByWorld(currentWorld)
+	local underwaterColor = 1
+	if self.recolorUnderwater == true and self.body:getY() > seaLevel then
+		underwaterColor = 1-(math.abs(seaLevel - self.body:getY())/300)
+		if underwaterColor < 0.2 then
+			underwaterColor = 0.2
+		end
+	end
 	if self.drawing.type == "image" or self.drawing.type == "texture"then
-		love.graphics.setColor(1,1,1)
+		love.graphics.setColor(underwaterColor,underwaterColor,1)
 		if self.shapeType == "rectangle" or self.shapeType == "circle" then --Physics describes origin as middle
 			love.graphics.draw(self.drawing.image,self.body:getX(),self.body:getY(),self.body:getAngle(),1,1,self.drawing.image:getWidth()/2,self.drawing.image:getHeight()/2)
 		elseif self.shapeType == "polygon" then --Physics describes origin as first vertex
 			love.graphics.draw(self.drawing.image,self.body:getX(),self.body:getY(),self.body:getAngle())
-		elseif self.shapeType == "circle" then
-			error("Circles cannot be textured: use a polygon or rectangle instead")
 		end
 	elseif self.drawing.type == "solid" then
-		love.graphics.setColor(0.20, 0.20, 0.20)
+		love.graphics.setColor(0.20*underwaterColor, 0.20*underwaterColor, 0.20)
 		if self.shapeType == "rectangle" or self.shapeType == "polygon" then
 			love.graphics.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 		elseif self.shapeType == "circle" then

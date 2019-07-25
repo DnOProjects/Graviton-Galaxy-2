@@ -10,26 +10,13 @@ function planets.loadWorlds()
 	end
 end
 
-function planets.changeWorld(worldNum)
-	currentWorld = worldNum
-	for i=1,#objects do
-		local object = objects[i]
-		if object.worldNum == worldNum then
-			object.body:setActive(true)
-		else
-			object.body:setActive(false)
-		end
-	end
-	world:setGravity(0,planets[worldNum].gravity)
-end
-
 function planets.loadObjects()
 	for i=1,#planets do
-		objects.add({worldNum=i,position=Vector(40,0),shape={type="polygon",vertices={0,0,400,0,300,100,50,50}},density=0.5,bodyType="dynamic",drawing={type="texture",texture=images.block}})
-		objects.add({worldNum=i,position=Vector(60,0),shape={type="circle",radius=100},density=0.2,bodyType="dynamic",drawing={type="image",image=images.planet}})
+		objects.add({recolorUnderwater=true,worldNum=i,position=Vector(40,0),shape={type="polygon",vertices={0,0,400,0,300,100,50,50}},density=0.5,bodyType="dynamic",drawing={type="texture",texture=images.block}})
+		objects.add({recolorUnderwater=true,worldNum=i,position=Vector(60,0),shape={type="circle",radius=100},density=0.2,bodyType="dynamic",drawing={type="image",image=images.planet}})
 
 		for j=1,20 do
-			objects.add({worldNum=i,position=Vector(j*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="image",image=images.block}}) --Blocks
+			objects.add({recolorUnderwater=true,worldNum=i,position=Vector(j*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="image",image=images.block}}) --Blocks
 		end
 
 		local planetDepth = 1000
@@ -61,12 +48,25 @@ function planets.loadObjects()
 	end
 end
 
+function planets.changeWorld(worldNum)
+	currentWorld = worldNum
+	for i=1,#objects do
+		local object = objects[i]
+		if object.worldNum == worldNum then
+			object.body:setActive(true)
+		else
+			object.body:setActive(false)
+		end
+	end
+	world:setGravity(0,planets[worldNum].gravity)
+end
+
 function planets.update(dt)
 	cameraPos = Vector(objects[1].body:getX()-screen_width/2,objects[1].body:getY()-screen_height/2)
 end
 
 function planets.draw()
-	drawOcean(-50000,1000,100000,1000,4)
+	drawOcean(-50000,seaLevel,100000,1000,4)
 end
 
 function drawOcean(start,y,length,depth,detail)

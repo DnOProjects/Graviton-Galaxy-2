@@ -1,6 +1,5 @@
 local fonts = require "fonts"
 local ui = require "ui"
-local input = require "input"
 local audio = require "audio"
 objects = require "objects"
 planets = require "planets"
@@ -21,7 +20,6 @@ function love.load()
 	fonts.load()
 	images.load()
 	audio.load()
-	input.load()
 	ui.load()
 	ui.initForGame()
 	objects.load()
@@ -35,7 +33,6 @@ function love.update(dt)
 	scale_X = love.graphics.getWidth()/screen_width
 	scale_Y = love.graphics.getHeight()/screen_height
 
-	input.update()
 	audio.update()
 	ui.update()
 
@@ -71,7 +68,7 @@ function love.draw()
 	love.graphics.pop()
 
 	ui.draw()
-	
+
 end
 
 function newGame()

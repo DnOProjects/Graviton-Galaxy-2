@@ -67,8 +67,11 @@ function love.draw()
 		planets.draw()
 	end
 	objects.draw()
+
 	love.graphics.pop()
+
 	ui.draw()
+	
 end
 
 function newGame()

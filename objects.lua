@@ -76,8 +76,8 @@ end
 function Object:draw()
 	local currentWorldObjects = objects.getObjectsByWorld(currentWorld)
 	local underwaterColor = 1
-	if self.recolorUnderwater == true and self.body:getY() > seaLevel then
-		underwaterColor = 1-(math.abs(seaLevel - self.body:getY())/300)
+	if self.recolorUnderwater == true and self.body:getY() > planets[currentWorld].sea.level then
+		underwaterColor = 1-(math.abs(planets[currentWorld].sea.level - self.body:getY())/400)
 		if underwaterColor < 0.2 then
 			underwaterColor = 0.2
 		end

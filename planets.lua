@@ -6,7 +6,7 @@ local planets = {}
 function planets.loadWorlds()
 	numWorlds = 5
 	for i=1,numWorlds do
-		planets[i] = {gravity = 64*math.random(5,20), bounds={start=-1000,stop=8000}}
+		planets[i] = {gravity = 64*math.random(5,20), sea={level=1000,waveSpeed=1}, bounds={start=-1000,stop=8000}}
 	end
 end
 
@@ -66,7 +66,7 @@ function planets.update(dt)
 end
 
 function planets.draw()
-	drawOcean(-50000,seaLevel,100000,1000,4)
+	drawOcean(-50000,planets[currentWorld].sea.level,100000,1000,4)
 end
 
 function drawOcean(start,y,length,depth,detail)
@@ -82,7 +82,7 @@ function drawSin(x,y,length,segments)
 	local points = {}
 	for i=1,segments do
 		points[i*2-1] = i*(length/segments)+x
-		points[i*2] = math.sin(i*(length/segments)*0.02+timer)*10+y
+		points[i*2] = math.sin(i*(length/segments)*0.02+(timer*planets[currentWorld].sea.waveSpeed))*10+y
 	end
 	love.graphics.setLineWidth(10)
 	love.graphics.line(points)

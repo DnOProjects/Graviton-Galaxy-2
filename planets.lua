@@ -19,7 +19,7 @@ function planets.loadObjects()
 			objects.add({recolorUnderwater=true,worldNum=i,position=Vector(j*50,550),shape={type="rectangle",size=Vector(20,100)},density=0.5,bodyType="dynamic",drawing={type="image",image=images.block}}) --Blocks
 		end
 
-		local planetDepth = 1000
+		local planetDepth = planets[currentWorld].sea.level
 
 		local numSegments = 100
 		local w,h = 500,50
@@ -42,6 +42,9 @@ function planets.loadObjects()
 				objects.add({worldNum=i,position=Vector(x,y),shape={type="polygon",vertices={0,h,w,h,0,planetDepth,w,planetDepth}},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}})
 			else
 				objects.add({worldNum=i,position=Vector(x,y),shape={type="polygon",vertices={0,0,w,0,0,planetDepth,w,planetDepth}},density=0.5,bodyType="static",drawing={type="texture",texture=images.dirt}})
+			end
+			if j == 1 or j == numSegments then
+				objects.add({worldNum=i,position=Vector(x+250,y+150),shape={type="rectangle",size=Vector(225,143)},density=0.5,bodyType="static",drawing={type="image",image=images.dangerOfDeath}})
 			end
 			x=x+w
 		end

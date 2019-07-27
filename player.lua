@@ -1,21 +1,32 @@
 local Vector = require "vector"
 local objects = require "objects"
 local images = require "images"
+local ui = require "ui"
 
 local player = {}
 
 function player.load()
+
 	objects.add({worldNum=currentWorld,stats={health=100},recolorUnderwater=true,position=Vector(300,200),shape={type="rectangle",size=Vector(20,60)},density=1,bodyType="dynamic",drawing={type="image",image=images.player}})
     objects[1].body:setFixedRotation(true)
     worldChanged = false
+
 end
 
 function player.land()
+
     local playerObject = objects[1]
     local currentWorldObjects = objects.getObjectsByWorld(currentWorld)
     playerObject.worldNum = currentWorld
     playerObject.body:setY(currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY()-150) --Moves player to surface
     playerObject.body:setActive(true)
+
+end
+
+function player.die()
+
+    ui.setPage("deathScreen")
+
 end
 
 function player.update(dt)
@@ -47,6 +58,14 @@ function player.update(dt)
 
     if playerObject.body:getY() >= currentWorldObjects[math.floor(#currentWorldObjects/2)].body:getY() then
        playerObject.body:applyForce(0, -100)
+    end
+
+    if playerObject.body:getX() < -25000 or playerObject.body:getX() > 25000 then
+       playerObject.stats.health = playerObject.stats.health - 1
+    end
+
+    if playerObject.stats.health <= 0 then
+        player.die()
     end
 
 end

@@ -56,10 +56,10 @@ function ui.initForGame()
 
 	-- In-game Menu
 
+	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
+
 	--ui.addInGameMenu("escape",{"gameMenu1","gameMenu2","gameMenu3"})
 	inGameMenuArray[1]={key="escape",pages={"gameMenu1","gameMenu2","gameMenu3"},open=false,canOpen=true}
-
-	ui.setMenuBackground({page="inGame",colour={0.41,0.53,0.97}})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"gameMenu1","run")
 	ui.addButton(love.graphics.getWidth()/2-152,430,280,60,255,255,255,"Options",1,0,"gameMenu1","gameMenu2")
@@ -79,6 +79,15 @@ function ui.initForGame()
 	ui.addInGameMenu("i",{"inventory"})
 
 	ui.addButton(love.graphics.getWidth()/2-152,330,280,60,255,255,255,"Resume",1,0,"inventory","run")
+
+	-- Death screen
+
+	ui.setMenuBackground({page="deathScreen",colour={0.41,0.53,0.97}})
+
+	ui.addInGameMenu("noKey",{"deathScreen"})
+
+	ui.addPrint(love.graphics.getWidth()/2-285,330,1,1,255,0,120,"You died!","deathScreen",fontStarCruiser)
+	ui.addButton(love.graphics.getWidth()/2-152,480,280,60,255,255,255,"Delete world",2,0,"deathScreen","deleteGame")
 
 end
 
@@ -106,7 +115,13 @@ function ui.updateInGameMenus()
 
 	if inGame == true then
 		for i=1,#inGameMenuArray do
-			if love.keyboard.isDown(inGameMenuArray[i].key) == true then
+			if inGameMenuArray[i].key == "noKey" then
+				if logic.inList(ui.getPage(), inGameMenuArray[i].pages) then
+					inGameMenuArray[i].open = true
+				else
+					inGameMenuArray[i].open = false
+				end
+			elseif love.keyboard.isDown(inGameMenuArray[i].key) == true then
 				if inGameMenuArray[i].canOpen == true then
 					inGameMenuArray[i].open = not inGameMenuArray[i].open
 					inGameMenuArray[i].canOpen = false
@@ -126,7 +141,11 @@ end
 
 function ui.addInGameMenu(key,pages)
 
-	inGameMenuArray[#inGameMenuArray+1]={key=key,pages=pages,open=false,canOpen=true}
+	if key == "noKey" then
+		inGameMenuArray[#inGameMenuArray+1]={key=key,pages=pages,open=false}
+	else
+		inGameMenuArray[#inGameMenuArray+1]={key=key,pages=pages,open=false,canOpen=true}
+	end
 
 end
 
@@ -160,7 +179,7 @@ function drawInGameUI()
 	love.graphics.setFont(fontNasalization)
 	love.graphics.setColor(1,1,1)
 	if inGame == true then
-		love.graphics.print("Health: "..objects[1].stats.health,1700,0,0,1,1)
+		love.graphics.print("Health: "..logic.round(objects[1].stats.health),1700,0,0,1,1)
 		love.graphics.print("X: "..logic.round(objects[1].body:getX()),0,40)-- Dev info being printed
 		love.graphics.print("Y: "..logic.round(objects[1].body:getY()),0,80)
 		love.graphics.print("World: "..currentWorld,0,120)
@@ -260,7 +279,7 @@ end
 function mousepressed()
 
 	for i=1,#buttonArray do
-		if buttonArray[i][11] == menuPage then
+		if buttonArray[i][11] == ui.getPage() then
 			if love.mouse.isDown(1) == true then
 				if canClick == true then
 					if mouseX > scale_X*buttonArray[i][1] and mouseX < scale_X*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > scale_Y*buttonArray[i][2] and mouseY < scale_Y*(buttonArray[i][2]+buttonArray[i][4]) then
@@ -276,8 +295,15 @@ function mousepressed()
 				        	objects.load()
 				        	if gameExists == false then
 				        		ui.addButton(170,400,240,60,255,255,255,"Load Game",0,0,4,"run")
+				        		loadGameButton = buttonArray[#buttonArray]
 				        	end
 				        	newGame()
+				        elseif buttonArray[i][12] == "deleteGame" then
+				        	objects.purge()
+				        	gameExists = false
+   							loadGameButton.toRemove = true
+   							ui.setPage(1)
+   							canClick = false
 				        elseif buttonArray[i][12] == "fullscreen" then
 				        	local unusedWidth, unusedHeight, flags = love.window.getMode()
 				        	if flags.borderless == true then love.window.setMode(1500, 900, {resizable=true,minwidth=800,minheight=600}) elseif flags.borderless == false then love.window.setMode(screen_width, screen_height, {borderless=true}) end
@@ -286,7 +312,7 @@ function mousepressed()
 				        	buttonArray[i][12] = "typing"
 				        	lineTimer = 0
 				        elseif buttonArray[i][12] ~= "typing" then
-				        	menuPage = buttonArray[i][12]
+				        	ui.setPage(buttonArray[i][12])
 				            canClick = false
 				        end
 				        click:stop()
@@ -399,6 +425,16 @@ function ui.getInputButtonText(ID)
 	end
 end
 
+function ui.cleanup()
+
+	for i=#buttonArray,1,-1 do
+		if buttonArray[i].toRemove == true then
+			table.remove(buttonArray,i)
+		end
+	end
+
+end
+
 function ui.update()
 
 	mouseX, mouseY = love.mouse.getPosition()
@@ -431,6 +467,8 @@ function ui.update()
 			end
 		end
 	end
+	
+	ui.cleanup()
 
 end
 

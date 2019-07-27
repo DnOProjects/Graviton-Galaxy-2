@@ -53,9 +53,8 @@ function love.draw()
 	love.graphics.setFont(fontNasalization)
 	love.graphics.setColor(1,1,1,1)
 
-	love.graphics.push()
-
 	if inGame == true then
+		love.graphics.push()
 		love.graphics.translate(-cameraPos[1],-cameraPos[2])
 		planets.draw()
 		objects.draw()

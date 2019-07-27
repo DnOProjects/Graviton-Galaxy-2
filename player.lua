@@ -5,7 +5,7 @@ local images = require "images"
 local player = {}
 
 function player.load()
-	objects.add({worldNum=currentWorld,recolorUnderwater=true,position=Vector(300,200),shape={type="rectangle",size=Vector(20,60)},density=1,bodyType="dynamic",drawing={type="image",image=images.player}})
+	objects.add({worldNum=currentWorld,stats={health=100},recolorUnderwater=true,position=Vector(300,200),shape={type="rectangle",size=Vector(20,60)},density=1,bodyType="dynamic",drawing={type="image",image=images.player}})
     objects[1].body:setFixedRotation(true)
     worldChanged = false
 end

@@ -15,8 +15,9 @@ local Object = Class:derive("Object")
 local drawHitboxes = false
 
 function Object:new(args)
-	self.recolorUnderwater = args.recolorUnderwater
 	self.worldNum = args.worldNum
+	self.stats = args.stats
+	self.recolorUnderwater = args.recolorUnderwater
 	self.drawing = args.drawing
 	self.body = love.physics.newBody(world,args.position[1],args.position[2],args.bodyType)
 	self.body:setActive(false)
@@ -128,7 +129,14 @@ end
 function objects.update(dt)
     
     world:update(dt)
-    
+
+    for i=1,#objects.getObjectsByWorld(currentWorld) do
+    	objects[i].body:setLinearDamping(planets[currentWorld].airResistance)
+		if objects[i].body:getY() > planets[currentWorld].sea.level then
+			 objects[i].body:setLinearDamping(planets[currentWorld].sea.resistance*(math.abs(planets[currentWorld].sea.level - objects[i].body:getY())/80))
+		end
+	end
+
     objects.cleanup()
 
 end

@@ -6,7 +6,7 @@ local planets = {}
 function planets.loadWorlds()
 	numWorlds = 5
 	for i=1,numWorlds do
-		planets[i] = {gravity = 64*math.random(5,20), sea={level=1000,waveSpeed=1}, bounds={start=-1000,stop=8000}}
+		planets[i] = {gravity = 64*math.random(5,20), airResistance=1, sea={resistance=1,level=1000,waveSpeed=1}, bounds={start=-1000,stop=8000}}
 	end
 end
 

@@ -1,3 +1,4 @@
+logic = require "logic"
 local fonts = require "fonts"
 local ui = require "ui"
 local audio = require "audio"
@@ -54,18 +55,12 @@ function love.draw()
 
 	love.graphics.push()
 
-	love.graphics.print("FPS: "..love.timer:getFPS())
 	if inGame == true then
-		love.graphics.print("X: "..round(objects[1].body:getX()),1700,0)
-		love.graphics.print("Y: "..round(objects[1].body:getY()),1700,40)
-		love.graphics.print("World: "..currentWorld,1700,80)
-		love.graphics.print("#objs: "..#objects,0,40)
 		love.graphics.translate(-cameraPos[1],-cameraPos[2])
 		planets.draw()
 		objects.draw()
+		love.graphics.pop()
 	end
-
-	love.graphics.pop()
 
 	ui.draw()
 

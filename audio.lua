@@ -1,3 +1,5 @@
+local logic = require("logic")
+
 local audio = {}
 
 function audio.load()
@@ -117,22 +119,17 @@ function fadeTracks()
 			if not(tracks[i][2] == "none") then
 
 				if tracks[i][2] == "out" then
-					tracks[i][1]:setVolume(round(tracks[i][1]:getVolume()-(0.1*fadeSpeed),3))
+					tracks[i][1]:setVolume(logic.round(tracks[i][1]:getVolume()-(0.1*fadeSpeed),3))
 				end
 
 				if tracks[i][2] == "in" then
-					tracks[i][1]:setVolume(round(tracks[i][1]:getVolume()+(0.1*fadeSpeed),3))
+					tracks[i][1]:setVolume(logic.round(tracks[i][1]:getVolume()+(0.1*fadeSpeed),3))
 				end
 
 				if tracks[i][1]:getVolume() > 1 or tracks[i][1]:getVolume() < 0.00001 then tracks[i][2] = "none" end
 			end
 		end
 	end
-end
-
-function round(num, numDecimalPlaces)
-  local mult = 10^(numDecimalPlaces or 0)
-  return math.floor(num * mult + 0.5) / mult
 end
 
 return audio

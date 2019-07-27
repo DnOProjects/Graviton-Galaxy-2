@@ -1,3 +1,4 @@
+local logic = require("logic")
 local objects = require("objects")
 local font = love.graphics.getFont()
 local utf8 = require("utf8")
@@ -30,25 +31,25 @@ function ui.initForGame()
 
 	ui.setMenuBackground({page=1,colour={0,0,0}})
 
-	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1)
-	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,1,4)
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",1,fontStarCruiser)
+	ui.addButton(170,290,240,60,255,255,255,"Play",0,0,1,4,fontStarCruiser)
 	ui.addButton(170,400,240,60,255,255,255,"Options",0,0,1,2)
 	ui.addButton(170,510,240,60,255,255,255,"Exit",0,0,1,"exit")
 
-	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",2)
-	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options",2)
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",2,fontStarCruiser)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options",2,fontStarCruiser)
 	ui.addButton(170,290,240,60,255,255,255,"Volume",0,0,2,3)
 	ui.addButton(170,400,240,60,255,255,255,"Fullscreen",0,0,2,"fullscreen")
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,2,1)
 
-	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",3)
-	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options - Volume",3)
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",3,fontStarCruiser)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Options - Volume",3,fontStarCruiser)
 	ui.addSlider(170,290,240,80,255,255,255,"Master",2,0,3,volume.master,6,11)
 	ui.addSlider(170,400,240,80,255,255,255,"Music",4,0,3,volume.music,6,11)
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,3,2)
 
-	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",4)
-	ui.addPrint(170,190,0.8,0.8,0,150,255,"Play",4)
+	ui.addPrint(love.graphics.getWidth()/2-560,100,1,1,0,255,255,"Graviton Galaxy 2",4,fontStarCruiser)
+	ui.addPrint(170,190,0.8,0.8,0,150,255,"Play",4,fontStarCruiser)
 	ui.addButton(170,290,240,60,255,255,255,"New Game",0,0,4,"new")
 	-- This is where load is when a game has been created
 	ui.addButton(170,510,240,60,255,255,255,"Back",0,0,4,1)
@@ -154,9 +155,18 @@ function ui.addSlider(x,y,xsize,ysize,r,g,b,text,textx,texty,page,sliderValue,sl
 
 end
 
-function rgb(r, g, b)
+function drawInGameUI()
 
-	return r/255, g/255, b/255
+	love.graphics.setFont(fontNasalization)
+	love.graphics.setColor(1,1,1)
+	if inGame == true then
+		love.graphics.print("Health: "..objects[1].stats.health,1700,0,0,1,1)
+		love.graphics.print("X: "..logic.round(objects[1].body:getX()),0,40)-- Dev info being printed
+		love.graphics.print("Y: "..logic.round(objects[1].body:getY()),0,80)
+		love.graphics.print("World: "..currentWorld,0,120)
+		love.graphics.print("#objs: "..#objects,0,160)
+	end
+	love.graphics.print("FPS: "..love.timer:getFPS())
 
 end
 
@@ -166,16 +176,16 @@ function drawButton()
 	for i=1,#buttonArray do
 		if buttonArray[i][11] == menuPage then
 			if mouseX > scale_X*buttonArray[i][1] and mouseX < scale_X*(buttonArray[i][1]+buttonArray[i][3]) and mouseY > scale_Y*buttonArray[i][2] and mouseY < scale_Y*(buttonArray[i][2]+buttonArray[i][4]) then
-		    	love.graphics.setColor(rgb(buttonArray[i][5]-150, buttonArray[i][6]-150, buttonArray[i][7]-150))
+		    	love.graphics.setColor(logic.rgb(buttonArray[i][5]-150, buttonArray[i][6]-150, buttonArray[i][7]-150))
 		    else
-		        love.graphics.setColor(rgb(buttonArray[i][5], buttonArray[i][6], buttonArray[i][7]))
+		        love.graphics.setColor(logic.rgb(buttonArray[i][5], buttonArray[i][6], buttonArray[i][7]))
 		    end
 		    love.graphics.rectangle("fill", buttonArray[i][1], buttonArray[i][2], buttonArray[i][3], buttonArray[i][4])
-		    love.graphics.setColor(rgb(0, 0, 0))
+		    love.graphics.setColor(0, 0, 0)
 		    love.graphics.rectangle("line", buttonArray[i][1], buttonArray[i][2], buttonArray[i][3], buttonArray[i][4])
 		    if buttonArray[i][12] == "inputText" or buttonArray[i][12] == "typing" then
 		    	love.graphics.print(buttonArray[i][8], buttonArray[i][1]+buttonArray[i][9]+10, buttonArray[i][2]+buttonArray[i][10]+10, 0, 3, 3)
-		    	love.graphics.setColor(rgb(255, 255, 255))
+		    	love.graphics.setColor(logic.rgb(255, 255, 255))
 		    	love.graphics.rectangle("fill", buttonArray[i][1]+font:getWidth(buttonArray[i][8])*3+10, buttonArray[i][2]+5, -font:getWidth(buttonArray[i][8])*3-10+buttonArray[i][3]-5, buttonArray[i][4]-10)
 		    else
 			    --NOTE : Text centralisation doesn't work amazingly so use textx and texty to get it right vv
@@ -191,7 +201,7 @@ function drawInputText()
 	love.graphics.setFont(fontNasalization)
 	for i=1,#buttonArray do
 		if buttonArray[i][11] == menuPage then
-			love.graphics.setColor(rgb(0, 0, 0))
+			love.graphics.setColor(logic.rgb(0, 0, 0))
 	    	if buttonArray[i][12] == "typing" then
 	    		if (love.mouse.isDown(1) == true and (mouseX < scale_X*buttonArray[i][1] or mouseX > scale_X*(buttonArray[i][1]+buttonArray[i][3]) or mouseY < scale_Y*buttonArray[i][2] or mouseY > scale_Y*(buttonArray[i][2]+buttonArray[i][4]))) or menuPage ~= buttonArray[i][11] then
 					buttonArray[i][12] = "inputText" 
@@ -219,10 +229,10 @@ end
 
 function drawPrintText()
 
-	love.graphics.setFont(fontStarCruiser)
 	for i=1,#printArray do
 		if printArray[i][9] == menuPage then
-			love.graphics.setColor(rgb(printArray[i][5], printArray[i][6], printArray[i][7]))
+			love.graphics.setFont(printArray[i][10])
+			love.graphics.setColor(logic.rgb(printArray[i][5], printArray[i][6], printArray[i][7]))
 			love.graphics.print(printArray[i][8],printArray[i][1],printArray[i][2],0,printArray[i][3],printArray[i][4])
 		end
 	end
@@ -234,9 +244,9 @@ function drawSlider()
 	love.graphics.setFont(fontNasalization)
 	for i=1,#sliderArray do
 		if sliderArray[i][11] == menuPage then
-		    love.graphics.setColor(rgb(sliderArray[i][5], sliderArray[i][6], sliderArray[i][7]))
+		    love.graphics.setColor(logic.rgb(sliderArray[i][5], sliderArray[i][6], sliderArray[i][7]))
 		    love.graphics.rectangle("fill", sliderArray[i][1], sliderArray[i][2], sliderArray[i][3], sliderArray[i][4])
-		    love.graphics.setColor(rgb(0, 0, 0))
+		    love.graphics.setColor(0, 0, 0)
 		    love.graphics.rectangle("line", sliderArray[i][1], sliderArray[i][2], sliderArray[i][3], sliderArray[i][4])
 			-- NOTE : Text centralisation doesn't work amazingly so use textx and texty to get it right vv
 			love.graphics.print(sliderArray[i][8]..": "..sliderArray[i][12], sliderArray[i][1]+sliderArray[i][3]/2-font:getWidth(sliderArray[i][8]..": "..sliderArray[i][12])*1.5-5+sliderArray[i][9], sliderArray[i][2]+10+sliderArray[i][10])
@@ -293,7 +303,7 @@ function mousepressed()
 			if love.mouse.isDown(1) == true then
 				if canSlide == true then
 					if mouseX > scale_X*(sliderArray[i][1]+10) and mouseX < scale_X*(sliderArray[i][1]+sliderArray[i][3]-10) and mouseY > scale_Y*((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))-10) and mouseY < scale_Y*(((sliderArray[i][2]+sliderArray[i][4]-(((sliderArray[i][14]-3)/2)+20))+sliderArray[i][14])+10) then
-						sliderArray[i][12] = round((mouseX-(sliderArray[i][1]+20))/((sliderArray[i][3]-40)/100))
+						sliderArray[i][12] = logic.round((mouseX-(sliderArray[i][1]+20))/((sliderArray[i][3]-40)/100))
 						if sliderArray[i][12] < 0 then
 							sliderArray[i][12] = 0
 						elseif sliderArray[i][12] > 100 then
@@ -347,7 +357,7 @@ function drawMenuBackgrounds() --Image or colour
 				love.graphics.setBackgroundColor(backgrounds[i][3][1], backgrounds[i][3][2], backgrounds[i][3][3])
 			elseif backgrounds[i][2] == "image" then
 				background = love.graphics.newImage(backgrounds[i][3])
-				love.graphics.setColor(rgb(255,255,255))
+				love.graphics.setColor(logic.rgb(255,255,255))
 				love.graphics.draw(background, 0, 0, 0, love.graphics.getWidth()/background:getWidth(), love.graphics.getHeight()/background:getHeight())
 			end
 		end
@@ -427,16 +437,13 @@ end
 function ui.draw()
 
 	love.graphics.setLineWidth(1)
+	drawInGameUI()
 	drawMenuBackgrounds()
 	drawButton()
 	drawInputText()
 	drawPrintText()
-	drawSlider() 
+	drawSlider()
 
-end
-
-function round(x)
-	return (x + 0.5 - (x + 0.5) % 1)
 end
 
 return ui
